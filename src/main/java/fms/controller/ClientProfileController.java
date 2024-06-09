@@ -1,10 +1,10 @@
-package controller;
+package fms.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
-import model.ClientModel;
+import main.java.fms.model.ClientModel;
 
 public class ClientProfileController {
   

@@ -1,4 +1,4 @@
-package model;
+package main.java.fms.model;
 
 public class ClientModel {
   private int id;

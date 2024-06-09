@@ -1,3 +1,5 @@
+package main.java.fms;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

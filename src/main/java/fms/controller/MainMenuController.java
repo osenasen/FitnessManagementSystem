@@ -1,4 +1,4 @@
-package controller;
+package main.java.fms.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -9,7 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import model.ClientModel;
+import main.java.fms.model.ClientModel;
 
 public class MainMenuController {
   

@@ -1,4 +1,4 @@
-package main.java.fms;
+package fms;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

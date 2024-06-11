@@ -1,4 +1,4 @@
-package main.java.fms.controller;
+package fms.controller;
 
 import javafx.scene.control.ListCell;
 import main.java.fms.model.ClientModel;

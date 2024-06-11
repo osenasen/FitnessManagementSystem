@@ -1,41 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="fms.controller.ClientProfileController">
-    <TabPane fx:id="tabPane" layoutX="14.0" layoutY="14.0" prefHeight="400.0" prefWidth="600.0">
-        <Tab text="Dashboard">
-            <AnchorPane fx:id="dashboardPane">
-                <Label text="Name: " layoutX="14.0" layoutY="14.0"/>
-                <Label fx:id="nameLabel" layoutX="100.0" layoutY="14.0"/>
-                <Label text="Health Info: " layoutX="14.0" layoutY="44.0"/>
-                <Label fx:id="healthInfoLabel" layoutX="100.0" layoutY="44.0"/>
-                <Label text="Goal: " layoutX="14.0" layoutY="74.0"/>
-                <Label fx:id="goalLabel" layoutX="100.0" layoutY="74.0"/>
-                <Label text="Workout: " layoutX="14.0" layoutY="104.0"/>
-                <Label fx:id="workoutLabel" layoutX="100.0" layoutY="104.0"/>
-                <Label text="Diet: " layoutX="14.0" layoutY="134.0"/>
-                <Label fx:id="dietLabel" layoutX="100.0" layoutY="134.0"/>
-            </AnchorPane>
-        </Tab>
-        <Tab text="General Info">
-            <AnchorPane fx:id="generalInfoPane">
-                <Label fx:id="generalInfoLabel" layoutX="14.0" layoutY="14.0"/>
-            </AnchorPane>
-        </Tab>
-        <Tab text="Workout">
-            <AnchorPane fx:id="workoutPane">
-                <Label fx:id="workoutDetailsLabel" layoutX="14.0" layoutY="14.0"/>
-            </AnchorPane>
-        </Tab>
-        <Tab text="Nutrition">
-            <AnchorPane fx:id="nutritionPane">
-                <Label fx:id="dietDetailsLabel" layoutX="14.0" layoutY="14.0"/>
-            </AnchorPane>
-        </Tab>
-    </TabPane>
-</AnchorPane>
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fms.controller.ClientProfileController">
+   <children>
+      <AnchorPane>
+         <children>
+            <BorderPane layoutX="339.0" layoutY="151.0" prefHeight="600.0" prefWidth="1100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <top>
+                  <AnchorPane prefHeight="35.0" prefWidth="1176.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <FontAwesomeIconView glyphName="USER" layoutX="14.0" layoutY="22.0" />
+                     </children></AnchorPane>
+               </top>
+               <left>
+                  <AnchorPane prefHeight="565.0" prefWidth="220.0" BorderPane.alignment="CENTER" />
+               </left>
+               <center>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+               </center>
+            </BorderPane>
+         </children>
+      </AnchorPane>
+   </children>
+</StackPane>

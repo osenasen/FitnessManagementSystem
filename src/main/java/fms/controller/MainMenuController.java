@@ -1,4 +1,4 @@
-package main.java.fms.controller;
+package fms.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

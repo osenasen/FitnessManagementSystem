@@ -7,7 +7,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.GridPane?>
 
-<GridPane fx:id="gridPane" alignment="CENTER" hgap="10" vgap="10" xmlns:fx="http://javafx.com/fxml" fx:controller="main.java.fms.controller.LoginController">
+<GridPane fx:id="gridPane" alignment="CENTER" hgap="10" vgap="10" xmlns:fx="http://javafx.com/fxml" fx:controller="fms.controller.LoginController">
     <Label text="Username:" />
     <TextField fx:id="usernameField" GridPane.columnIndex="1" />
 

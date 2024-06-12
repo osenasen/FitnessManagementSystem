@@ -48,6 +48,8 @@ public class ClientProfileController {
   private Label dietDetailsLabel;
   
   private ClientModel client;
+
+
   
   public void setClient(ClientModel client) {
     this.client = client;

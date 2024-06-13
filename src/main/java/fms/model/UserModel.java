@@ -1,4 +1,4 @@
-package main.java.fms.model;
+package fms.model;
 
 public class UserModel {
   private String username;

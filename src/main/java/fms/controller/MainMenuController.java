@@ -9,7 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import main.java.fms.model.ClientModel;
+import fms.model.ClientModel;
 
 public class MainMenuController {
   
@@ -42,12 +42,13 @@ public class MainMenuController {
       ClientProfileController controller = loader.getController();
       controller.setClient(client);
       
-      Stage stage = (Stage) clientListView.getScene().getWindow();
-      Scene scene = new Scene(root);
-      stage.setScene(scene);
+      Stage stage = new Stage();
+      stage.setTitle("Client Profile");
+      stage.setScene(new Scene(root));
       stage.show();
     } catch (Exception e) {
       e.printStackTrace();
     }
   }
 }
+

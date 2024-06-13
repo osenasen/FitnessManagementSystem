@@ -1,4 +1,4 @@
-package main.java.fms.model;
+package fms.model;
 
 public class ClientModel {
   private int id;
@@ -17,53 +17,11 @@ public class ClientModel {
     this.diet = diet;
   }
   
-  // Getters and setters
-  
-  public int getId() {
-    return id;
-  }
-  
-  public void setId(int id) {
-    this.id = id;
-  }
-  
-  public String getName() {
-    return name;
-  }
-  
-  public void setName(String name) {
-    this.name = name;
-  }
-  
-  public String getHealthInfo() {
-    return healthInfo;
-  }
-  
-  public void setHealthInfo(String healthInfo) {
-    this.healthInfo = healthInfo;
-  }
-  
-  public String getGoal() {
-    return goal;
-  }
-  
-  public void setGoal(String goal) {
-    this.goal = goal;
-  }
-  
-  public String getWorkout() {
-    return workout;
-  }
-  
-  public void setWorkout(String workout) {
-    this.workout = workout;
-  }
-  
-  public String getDiet() {
-    return diet;
-  }
-  
-  public void setDiet(String diet) {
-    this.diet = diet;
-  }
+  public int getId() { return id; }
+  public String getName() { return name; }
+  public String getHealthInfo() { return healthInfo; }
+  public String getGoal() { return goal; }
+  public String getWorkout() { return workout; }
+  public String getDiet() { return diet; }
 }
+

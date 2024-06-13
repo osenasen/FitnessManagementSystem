@@ -1,7 +1,7 @@
 package fms.controller;
 
 import javafx.scene.control.ListCell;
-import main.java.fms.model.ClientModel;
+import fms.model.ClientModel;
 
 public class ClientListCell extends ListCell<ClientModel> {
   @Override

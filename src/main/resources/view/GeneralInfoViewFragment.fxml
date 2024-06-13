@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="fms.controller.GeneralInfoController" spacing="10" padding="10">
-    <Label text="General Info View"/>
-</VBox>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.Label?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="fms.controller.GeneralInfoController">
+    <children>
+        <Label fx:id="generalInfoLabel" layoutX="10" layoutY="10" text="General Info"/>
+    </children>
+</AnchorPane>

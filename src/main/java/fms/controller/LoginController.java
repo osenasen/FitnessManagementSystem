@@ -27,6 +27,14 @@ public class LoginController {
       showAlert("Login Failed", "Invalid username or password.");
     }
   }
+
+  @FXML
+  private void handleDelete() {
+    // Clear the username and password fields
+    usernameField.clear();
+    passwordField.clear();
+    System.out.println("Delete Button clicked");
+  }
   
   private boolean authenticate(String username, String password) {
     // Placeholder for real authentication

@@ -11,7 +11,7 @@ public class MainApp extends Application {
   @Override
   public void start(Stage primaryStage) throws Exception {
     Parent root = FXMLLoader.load(getClass().getResource("/view/LoginView.fxml"));
-    primaryStage.setTitle("Client Management System");
+    primaryStage.setTitle("Fitness Management System");
     primaryStage.setScene(new Scene(root));
     primaryStage.show();
   }

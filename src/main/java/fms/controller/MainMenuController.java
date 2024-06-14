@@ -1,12 +1,12 @@
 package fms.controller;
 
+import fms.model.UserModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
@@ -15,9 +15,10 @@ import javafx.stage.Stage;
 import fms.model.ClientModel;
 
 public class MainMenuController {
-
   @FXML
   private Label usernameLabel;
+
+  private UserModel userModel = UserModel.getInstance();
 
   @FXML
   private ListView<ClientModel> clientListView;
@@ -25,8 +26,7 @@ public class MainMenuController {
   private ObservableList<ClientModel> clients = FXCollections.observableArrayList();
 
   public void initialize() {
-    // Set the username label
-    usernameLabel.setText(LoginController.loggedInUser);
+    usernameLabel.setText("Welcome, " + userModel.getUsername());
 
     // Add an example client
     clients.add(new ClientModel(1, "John Doe", "Healthy", "Lose Weight", "Cardio", "Balanced Diet"));
@@ -45,30 +45,34 @@ public class MainMenuController {
   }
 
   @FXML
-  private void handleLogout() {
+  private void handleChangePassword() {
     try {
-      FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/LoginView.fxml"));
-      Parent root = loader.load();
-
-      Stage stage = (Stage) usernameLabel.getScene().getWindow();
+      FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/ChangePasswordView.fxml"));
+      Parent root = fxmlLoader.load();
+      Stage stage = new Stage();
+      stage.setTitle("Change Password");
       stage.setScene(new Scene(root));
-      stage.show();
+      stage.initModality(Modality.APPLICATION_MODAL); // Makes the pop-up modal
+      stage.showAndWait();
     } catch (Exception e) {
       e.printStackTrace();
     }
   }
 
+  // Method for logging out
   @FXML
-  private void handleChangePassword() {
+  private void handleLogout() {
     try {
-      FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/ChangePasswordView.fxml"));
-      Parent root = loader.load();
-
+      FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/LoginView.fxml"));
+      Parent root = fxmlLoader.load();
       Stage stage = new Stage();
-      stage.initModality(Modality.APPLICATION_MODAL);
-      stage.setTitle("Change Password");
+      stage.setTitle("Login");
       stage.setScene(new Scene(root));
-      stage.showAndWait();
+      stage.show();
+
+      // Close the current main menu window
+      Stage currentStage = (Stage) usernameLabel.getScene().getWindow();
+      currentStage.close();
     } catch (Exception e) {
       e.printStackTrace();
     }

@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import fms.model.UserModel;
 
 public class LoginController {
 
@@ -18,31 +19,38 @@ public class LoginController {
   private PasswordField passwordField;
 
   @FXML
-  private Label loginErrorLabel;
+  private Label errorLabel;
 
-  public static String loggedInUser;
-  public static String password = "defaultPassword"; // Default password
+  private UserModel userModel = UserModel.getInstance();
 
   @FXML
   private void handleLogin() {
     String username = usernameField.getText();
-    String passwordInput = passwordField.getText();
+    String password = passwordField.getText();
 
-    if ("user".equals(username) && password.equals(passwordInput)) {
-      loggedInUser = username;
+    if (username.equals(userModel.getUsername()) && password.equals(userModel.getPassword())) {
+      // Set the logged-in username
+      userModel.setUsername(username);
 
-      try {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/MainMenuView.fxml"));
-        Parent root = loader.load();
-
-        Stage stage = (Stage) usernameField.getScene().getWindow();
-        stage.setScene(new Scene(root));
-        stage.show();
-      } catch (Exception e) {
-        e.printStackTrace();
-      }
+      // Proceed to the main menu
+      Stage stage = (Stage) usernameField.getScene().getWindow();
+      stage.close();
+      openMainMenu();
     } else {
-      loginErrorLabel.setText("Invalid username or password.");
+      errorLabel.setText("Invalid username or password.");
+    }
+  }
+
+  private void openMainMenu() {
+    try {
+      FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/MainMenuView.fxml"));
+      Parent root = fxmlLoader.load();
+      Stage stage = new Stage();
+      stage.setTitle("Main Menu");
+      stage.setScene(new Scene(root));
+      stage.show();
+    } catch (Exception e) {
+      e.printStackTrace();
     }
   }
 }

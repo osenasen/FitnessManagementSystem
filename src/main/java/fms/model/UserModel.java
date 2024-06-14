@@ -1,12 +1,20 @@
 package fms.model;
 
 public class UserModel {
+  private static UserModel instance;
   private String username;
   private String password;
 
-  public UserModel(String username, String password) {
-    this.username = username;
-    this.password = password;
+  private UserModel() {
+    this.username = "defaultUser";
+    this.password = "password";
+  }
+
+  public static UserModel getInstance() {
+    if (instance == null) {
+      instance = new UserModel();
+    }
+    return instance;
   }
 
   public String getUsername() {
@@ -17,7 +25,11 @@ public class UserModel {
     return password;
   }
 
-  public void setPassword(String password) {
-    this.password = password;
+  public void setUsername(String username) {
+    this.username = username;
+  }
+
+  public void setPassword(String newPassword) {
+    this.password = newPassword;
   }
 }

@@ -7,17 +7,20 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class MainApp extends Application {
-  
+
   @Override
-  public void start(Stage primaryStage) throws Exception {
-    Parent root = FXMLLoader.load(getClass().getResource("/view/LoginView.fxml"));
-    primaryStage.setTitle("Client Management System");
-    primaryStage.setScene(new Scene(root));
-    primaryStage.show();
+  public void start(Stage primaryStage) {
+    try {
+      Parent root = FXMLLoader.load(getClass().getResource("/view/LoginView.fxml"));
+      primaryStage.setTitle("Fitness Management System");
+      primaryStage.setScene(new Scene(root));
+      primaryStage.show();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
-  
+
   public static void main(String[] args) {
     launch(args);
   }
 }
-//this should work in the new branch

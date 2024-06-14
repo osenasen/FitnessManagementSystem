@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<GridPane fx:id="gridPane" alignment="CENTER" hgap="10" vgap="10" xmlns:fx="http://javafx.com/fxml" fx:controller="fms.controller.LoginController">
-    <Label text="Username:" />
-    <TextField fx:id="usernameField" GridPane.columnIndex="1" />
-
-    <Label text="Password:" GridPane.rowIndex="1" />
-    <PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-
-    <Button text="Login" onAction="#handleLogin" GridPane.columnSpan="2" GridPane.rowIndex="2" GridPane.halignment="CENTER"/>
-</GridPane>
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fms.controller.LoginController">
+    <TextField fx:id="usernameField" promptText="Username" layoutX="50" layoutY="50"/>
+    <PasswordField fx:id="passwordField" promptText="Password" layoutX="50" layoutY="100"/>
+    <Button text="Login" onAction="#handleLogin" layoutX="50" layoutY="150"/>
+    <Label fx:id="errorLabel" textFill="red" layoutX="50" layoutY="200"/>
+</AnchorPane>

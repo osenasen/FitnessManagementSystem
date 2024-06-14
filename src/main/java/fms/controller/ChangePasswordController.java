@@ -1,44 +1,44 @@
 package fms.controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.stage.Stage;
+import fms.model.UserModel;
 
 public class ChangePasswordController {
 
     @FXML
-    private PasswordField currentPasswordField;
+    private PasswordField oldPasswordField;
 
     @FXML
     private PasswordField newPasswordField;
 
     @FXML
-    private PasswordField repeatNewPasswordField;
+    private PasswordField confirmPasswordField;
+
+    @FXML
+    private Label errorLabel;
+
+    private UserModel userModel = UserModel.getInstance();
 
     @FXML
     private void handleChangePassword() {
-        String currentPassword = currentPasswordField.getText();
+        String oldPassword = oldPasswordField.getText();
         String newPassword = newPasswordField.getText();
-        String repeatNewPassword = repeatNewPasswordField.getText();
+        String confirmPassword = confirmPasswordField.getText();
 
-        if (!LoginController.password.equals(currentPassword)) {
-            // Current password is incorrect
-            System.out.println("Current password is incorrect.");
-            return;
+        if (!oldPassword.equals(userModel.getPassword())) {
+            errorLabel.setText("Old password is incorrect.");
+        } else if (!newPassword.equals(confirmPassword)) {
+            errorLabel.setText("New passwords do not match.");
+        } else if (newPassword.isEmpty() || confirmPassword.isEmpty()) {
+            errorLabel.setText("Passwords cannot be empty.");
+        } else {
+            userModel.setPassword(newPassword);
+            // Close the pop-up window
+            Stage stage = (Stage) newPasswordField.getScene().getWindow();
+            stage.close();
         }
-
-        if (!newPassword.equals(repeatNewPassword)) {
-            // New passwords do not match
-            System.out.println("New passwords do not match.");
-            return;
-        }
-
-        // Change the password
-        LoginController.password = newPassword;
-        System.out.println("Password changed successfully.");
-
-        // Close the window
-        Stage stage = (Stage) currentPasswordField.getScene().getWindow();
-        stage.close();
     }
 }

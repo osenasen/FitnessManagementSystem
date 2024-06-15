@@ -2,21 +2,25 @@ package fms;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import fms.utils.DatabaseManager;
+import fms.utils.UserDAO;
 
 public class MainApp extends Application {
-
   @Override
   public void start(Stage primaryStage) {
+    DatabaseManager.initializeDatabase();
+    UserDAO userDAO = new UserDAO();
+    userDAO.ensureDefaultUser();  // Ensure default user is inserted if table is empty
     try {
-      Parent root = FXMLLoader.load(getClass().getResource("/view/LoginView.fxml"));
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/LoginView.fxml"));
+      Scene scene = new Scene(loader.load());
+      primaryStage.setScene(scene);
       primaryStage.setTitle("Fitness Management System");
-      primaryStage.setScene(new Scene(root));
       primaryStage.show();
     } catch (Exception e) {
-      e.printStackTrace();
+      e.printStackTrace(); // Simple error logging
     }
   }
 

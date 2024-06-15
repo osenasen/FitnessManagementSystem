@@ -1,35 +1,39 @@
 package fms.model;
 
 public class UserModel {
-  private static UserModel instance;
+  private int id;
   private String username;
   private String password;
 
-  private UserModel() {
-    this.username = "defaultUser";
-    this.password = "password";
+  public UserModel() {}
+
+  public UserModel(String username, String password) {
+    this.username = username;
+    this.password = password;
   }
 
-  public static UserModel getInstance() {
-    if (instance == null) {
-      instance = new UserModel();
-    }
-    return instance;
+  // Getters and setters
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
   }
 
   public String getUsername() {
     return username;
   }
 
-  public String getPassword() {
-    return password;
-  }
-
   public void setUsername(String username) {
     this.username = username;
   }
 
-  public void setPassword(String newPassword) {
-    this.password = newPassword;
+  public String getPassword() {
+    return password;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
   }
 }

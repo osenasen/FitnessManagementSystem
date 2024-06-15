@@ -1,6 +1,7 @@
 package fms.controller;
 
 import fms.model.UserModel;
+import fms.utils.UserDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -15,17 +16,19 @@ import javafx.stage.Stage;
 import fms.model.ClientModel;
 
 public class MainMenuController {
+
   @FXML
   private Label usernameLabel;
-
-  private UserModel userModel = UserModel.getInstance();
 
   @FXML
   private ListView<ClientModel> clientListView;
 
   private ObservableList<ClientModel> clients = FXCollections.observableArrayList();
+  private UserDAO userDAO = new UserDAO();
+  private UserModel userModel;
 
   public void initialize() {
+    userModel = userDAO.loadUser();
     usernameLabel.setText("Welcome, " + userModel.getUsername());
 
     // Add an example client

@@ -11,8 +11,7 @@ public class MainApp extends Application {
   @Override
   public void start(Stage primaryStage) {
     DatabaseManager.initializeDatabase();
-    UserDAO userDAO = new UserDAO();
-    userDAO.ensureDefaultUser();  // Ensure default user is inserted if table is empty
+
     try {
       FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/LoginView.fxml"));
       Scene scene = new Scene(loader.load());

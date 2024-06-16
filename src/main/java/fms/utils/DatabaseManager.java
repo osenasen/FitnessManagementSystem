@@ -26,7 +26,10 @@ public class DatabaseManager {
                     "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "username TEXT NOT NULL," +
                     "password TEXT NOT NULL)");
-            System.out.println("User table created or already exists.");
+            conn.createStatement().execute("CREATE TABLE IF NOT EXISTS Client (" +
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    "name TEXT NOT NULL)");
+            System.out.println("User and Client tables created or already exist.");
         } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());
         } finally {
@@ -35,7 +38,6 @@ public class DatabaseManager {
             } catch (SQLException e) {
                 System.out.println("Error closing resources: " + e.getMessage());
             }
-            System.out.println("Resources closed successfully.");
         }
     }
 }

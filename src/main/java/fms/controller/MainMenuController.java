@@ -52,7 +52,7 @@ public class MainMenuController {
       Stage stage = new Stage();
       stage.setTitle("Change Password");
       stage.setScene(new Scene(root));
-      stage.initModality(Modality.APPLICATION_MODAL); // Makes the pop-up modal
+      stage.initModality(Modality.APPLICATION_MODAL);
       stage.showAndWait();
     } catch (Exception e) {
       e.printStackTrace();
@@ -85,10 +85,10 @@ public class MainMenuController {
       Stage stage = new Stage();
       stage.setTitle("Add Client");
       stage.setScene(new Scene(root));
-      stage.initModality(Modality.APPLICATION_MODAL); // Makes the pop-up modal
+      stage.initModality(Modality.APPLICATION_MODAL);
       stage.showAndWait();
 
-      loadClients(); // Refresh client list after adding a new client
+      loadClients();
     } catch (Exception e) {
       e.printStackTrace();
     }

@@ -11,7 +11,6 @@ public class UserModel {
     this.password = password;
   }
 
-  // Getters and setters
   public int getId() {
     return id;
   }

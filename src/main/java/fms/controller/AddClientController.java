@@ -18,14 +18,12 @@ public class AddClientController {
         String lastName = lastNameField.getText();
 
         if (firstName.isEmpty() || lastName.isEmpty()) {
-            // Display error message if fields are empty
             return;
         }
 
         ClientModel client = new ClientModel(0, firstName + " " + lastName); // ID will auto-increment in the database
         ClientModel.addClient(client);
 
-        // Close the add client window
         Stage stage = (Stage) firstNameField.getScene().getWindow();
         stage.close();
     }

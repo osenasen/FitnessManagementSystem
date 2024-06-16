@@ -13,11 +13,9 @@ public class ClientModel {
     this.name = name;
   }
 
-  // Getter methods
   public int getId() { return id; }
   public String getName() { return name; }
 
-  // Static methods for database operations
   public static void addClient(ClientModel client) {
     clientDAO.addClient(client);
   }

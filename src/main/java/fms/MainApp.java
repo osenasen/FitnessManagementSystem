@@ -19,7 +19,7 @@ public class MainApp extends Application {
       primaryStage.setTitle("Fitness Management System");
       primaryStage.show();
     } catch (Exception e) {
-      e.printStackTrace(); // Simple error logging
+      e.printStackTrace();
     }
   }
 

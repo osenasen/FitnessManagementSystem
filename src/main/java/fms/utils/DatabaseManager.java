@@ -11,7 +11,7 @@ public class DatabaseManager {
         Connection conn = null;
         try {
             conn = DriverManager.getConnection(DB_URL);
-            conn.createStatement().execute("PRAGMA busy_timeout = 5000"); // Set busy timeout to 5 seconds
+            conn.createStatement().execute("PRAGMA busy_timeout = 5000");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

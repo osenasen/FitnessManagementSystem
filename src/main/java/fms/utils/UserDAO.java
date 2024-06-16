@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserDAO {
-    // Method to save a user
     public void saveUser(UserModel user) {
         String sql = "INSERT INTO User(username, password) VALUES(?, ?)";
         try (Connection conn = DatabaseManager.connect();
@@ -21,7 +20,6 @@ public class UserDAO {
         }
     }
 
-    // Method to load a user
     public UserModel loadUser() {
         String sql = "SELECT * FROM User LIMIT 1";
         try (Connection conn = DatabaseManager.connect();
@@ -34,10 +32,9 @@ public class UserDAO {
         } catch (SQLException e) {
             System.out.println("Error loading user: " + e.getMessage());
         }
-        return new UserModel("defaultUser", "password"); // Default user if none found
+        return new UserModel("defaultUser", "password");
     }
 
-    // Method to update a user
     public void updateUser(UserModel user) {
         String sql = "UPDATE User SET password = ? WHERE username = ?";
         try (Connection conn = DatabaseManager.connect();

@@ -8,13 +8,9 @@ public class ClientModel {
   private String workout;
   private String diet;
   
-  public ClientModel(int id, String name, String healthInfo, String goal, String workout, String diet) {
+  public ClientModel(int id, String name) {
     this.id = id;
     this.name = name;
-    this.healthInfo = healthInfo;
-    this.goal = goal;
-    this.workout = workout;
-    this.diet = diet;
   }
   
   public int getId() { return id; }

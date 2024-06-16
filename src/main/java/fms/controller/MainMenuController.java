@@ -32,7 +32,7 @@ public class MainMenuController {
     usernameLabel.setText("Welcome, " + userModel.getUsername());
 
     // Add an example client
-    clients.add(new ClientModel(1, "John Doe", "Healthy", "Lose Weight", "Cardio", "Balanced Diet"));
+    clients.add(new ClientModel(1, "John Doe"));
     clientListView.setItems(clients);
     clientListView.setCellFactory(param -> new ClientListCell());
   }

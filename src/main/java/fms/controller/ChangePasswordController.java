@@ -43,8 +43,7 @@ public class ChangePasswordController {
             errorLabel.setText("Passwords cannot be empty.");
         } else {
             userModel.setPassword(newPassword);
-            userDAO.updateUser(userModel);  // Save the updated password to the database
-            // Close the pop-up window
+            userDAO.updateUser(userModel);
             Stage stage = (Stage) newPasswordField.getScene().getWindow();
             stage.close();
         }

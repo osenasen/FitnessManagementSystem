@@ -5,7 +5,6 @@ public class UserModel {
   private String username;
   private String password;
 
-  public UserModel() {}
 
   public UserModel(String username, String password) {
     this.username = username;

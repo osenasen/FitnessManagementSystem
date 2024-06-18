@@ -29,7 +29,21 @@ public class DatabaseManager {
             conn.createStatement().execute("CREATE TABLE IF NOT EXISTS Client (" +
                     "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "name TEXT NOT NULL)");
-            System.out.println("User and Client tables created or already exist.");
+            conn.createStatement().execute("CREATE TABLE IF NOT EXISTS Recipe (" +
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    "name TEXT NOT NULL," +
+                    "imagePath TEXT," +
+                    "proteins INTEGER," +
+                    "carbs INTEGER," +
+                    "calories INTEGER," +
+                    "linkPlaceholder TEXT)");
+            conn.createStatement().execute("CREATE TABLE IF NOT EXISTS Client_Nutrition (" +
+                    "client_id INTEGER," +
+                    "recipe_id INTEGER," +
+                    "FOREIGN KEY (client_id) REFERENCES Client(id)," +
+                    "FOREIGN KEY (recipe_id) REFERENCES Recipe(id)," +
+                    "PRIMARY KEY (client_id, recipe_id))");
+            System.out.println("User, Client, Recipe, and Client_Nutrition tables created or already exist.");
         } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());
         } finally {

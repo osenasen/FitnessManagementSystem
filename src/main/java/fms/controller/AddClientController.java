@@ -21,7 +21,7 @@ public class AddClientController {
             return;
         }
 
-        ClientModel client = new ClientModel(0, firstName + " " + lastName); // ID will auto-increment in the database
+        ClientModel client = new ClientModel(0, firstName + " " + lastName);
         ClientModel.addClient(client);
 
         Stage stage = (Stage) firstNameField.getScene().getWindow();

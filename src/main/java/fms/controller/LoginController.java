@@ -47,6 +47,14 @@ public class LoginController {
     }
   }
 
+  @FXML
+  private void handleDelete() {
+    // Logik zum Löschen von Daten oder Feldern
+    usernameField.clear();
+    passwordField.clear();
+    System.out.println("Fields cleared");
+  }
+
   private void openMainMenu() {
     try {
       FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/MainMenuView.fxml"));

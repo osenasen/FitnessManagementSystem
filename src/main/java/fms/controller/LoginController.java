@@ -1,5 +1,4 @@
 package fms.controller;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,6 +8,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import fms.model.UserModel;
+import fms.utils.UserDAO;
 
 public class LoginController {
 
@@ -21,7 +21,14 @@ public class LoginController {
   @FXML
   private Label errorLabel;
 
-  private UserModel userModel = UserModel.getInstance();
+  private UserDAO userDAO = new UserDAO();
+  private UserModel userModel;
+
+  @FXML
+  public void initialize() {
+    userModel = userDAO.loadUser();
+  }
+
 
   @FXML
   private void handleLogin() {
@@ -29,10 +36,9 @@ public class LoginController {
     String password = passwordField.getText();
 
     if (username.equals(userModel.getUsername()) && password.equals(userModel.getPassword())) {
-      // Set the logged-in username
+
       userModel.setUsername(username);
 
-      // Proceed to the main menu
       Stage stage = (Stage) usernameField.getScene().getWindow();
       stage.close();
       openMainMenu();

@@ -36,7 +36,7 @@ public class ClientProfileController {
 
   @FXML
   private void showNutritionView() {
-    loadView("/view/NutritionViewFragment.fxml");
+    loadView("/view/NutritionFragment.fxml");
   }
 
   @FXML

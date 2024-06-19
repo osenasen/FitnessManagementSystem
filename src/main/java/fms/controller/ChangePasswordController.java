@@ -5,6 +5,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.stage.Stage;
 import fms.model.UserModel;
+import fms.utils.UserDAO;
 
 public class ChangePasswordController {
 
@@ -20,7 +21,13 @@ public class ChangePasswordController {
     @FXML
     private Label errorLabel;
 
-    private UserModel userModel = UserModel.getInstance();
+    private UserDAO userDAO = new UserDAO();
+    private UserModel userModel;
+
+    @FXML
+    public void initialize() {
+        userModel = userDAO.loadUser();
+    }
 
     @FXML
     private void handleChangePassword() {
@@ -36,7 +43,7 @@ public class ChangePasswordController {
             errorLabel.setText("Passwords cannot be empty.");
         } else {
             userModel.setPassword(newPassword);
-            // Close the pop-up window
+            userDAO.updateUser(userModel);
             Stage stage = (Stage) newPasswordField.getScene().getWindow();
             stage.close();
         }

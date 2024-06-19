@@ -1,6 +1,8 @@
 package fms.controller;
 
+import fms.model.ClientModel;
 import fms.model.UserModel;
+import fms.utils.UserDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -12,26 +14,24 @@ import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import fms.model.ClientModel;
 
 public class MainMenuController {
+
   @FXML
   private Label usernameLabel;
-
-  private UserModel userModel = UserModel.getInstance();
 
   @FXML
   private ListView<ClientModel> clientListView;
 
   private ObservableList<ClientModel> clients = FXCollections.observableArrayList();
+  private UserDAO userDAO = new UserDAO();
+  private UserModel userModel;
 
   public void initialize() {
+    userModel = userDAO.loadUser();
     usernameLabel.setText("Welcome, " + userModel.getUsername());
 
-    // Add an example client
-    clients.add(new ClientModel(1, "John Doe", "Healthy", "Lose Weight", "Cardio", "Balanced Diet"));
-    clientListView.setItems(clients);
-    clientListView.setCellFactory(param -> new ClientListCell());
+    loadClients();
   }
 
   @FXML
@@ -52,14 +52,13 @@ public class MainMenuController {
       Stage stage = new Stage();
       stage.setTitle("Change Password");
       stage.setScene(new Scene(root));
-      stage.initModality(Modality.APPLICATION_MODAL); // Makes the pop-up modal
+      stage.initModality(Modality.APPLICATION_MODAL);
       stage.showAndWait();
     } catch (Exception e) {
       e.printStackTrace();
     }
   }
 
-  // Method for logging out
   @FXML
   private void handleLogout() {
     try {
@@ -76,6 +75,29 @@ public class MainMenuController {
     } catch (Exception e) {
       e.printStackTrace();
     }
+  }
+
+  @FXML
+  private void handleAddClient() {
+    try {
+      FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/AddClientView.fxml"));
+      Parent root = fxmlLoader.load();
+      Stage stage = new Stage();
+      stage.setTitle("Add Client");
+      stage.setScene(new Scene(root));
+      stage.initModality(Modality.APPLICATION_MODAL);
+      stage.showAndWait();
+
+      loadClients();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  private void loadClients() {
+    clients.setAll(ClientModel.getAllClients());
+    clientListView.setItems(clients);
+    clientListView.setCellFactory(param -> new ClientListCell());
   }
 
   private void loadClientProfile(ClientModel client) {

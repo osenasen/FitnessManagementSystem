@@ -14,16 +14,22 @@ import java.util.List;
 public class AddRecipeController {
     @FXML
     private TableView<RecipeModel> recipeTableView;
+
     @FXML
     private TableColumn<RecipeModel, Boolean> selectColumn;
+
     @FXML
     private TableColumn<RecipeModel, String> nameColumn;
+
     @FXML
     private TableColumn<RecipeModel, Integer> proteinsColumn;
+
     @FXML
     private TableColumn<RecipeModel, Integer> carbsColumn;
+
     @FXML
     private TableColumn<RecipeModel, Integer> caloriesColumn;
+
     @FXML
     private TableColumn<RecipeModel, String> linkPlaceholderColumn;
     

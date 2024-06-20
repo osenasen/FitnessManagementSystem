@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "name": "Recipe 1",
+    "imagePath": "/view/images/image1.jpg",
+    "proteins": 10,
+    "carbs": 20,
+    "calories": 300,
+    "linkPlaceholder": "http://example.com/recipe1"
+  },
+  {
+    "id": 2,
+    "name": "Recipe 2",
+    "imagePath": "/view/images/image2.png",
+    "proteins": 15,
+    "carbs": 25,
+    "calories": 350,
+    "linkPlaceholder": "http://example.com/recipe2"
+  }
+]

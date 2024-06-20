@@ -1,26 +1,56 @@
 package fms.model;
 
-import fms.utils.ClientDAO;
+import java.io.Serializable;
 import java.util.List;
 
-public class ClientModel {
+public class ClientModel implements Serializable {
+  private static final long serialVersionUID = 1L;
+
   private int id;
   private String name;
-  private static ClientDAO clientDAO = new ClientDAO();
+  private List<RecipeModel> recipeModels;
+  private List<ExerciseModel> exerciseModels;
 
-  public ClientModel(int id, String name) {
+  // Default constructor
+  public ClientModel() {}
+
+  // Constructor with parameters
+  public ClientModel(int id, String name, List<RecipeModel> recipeModels, List<ExerciseModel> exerciseModels) {
     this.id = id;
+    this.name = name;
+    this.recipeModels = recipeModels;
+    this.exerciseModels = exerciseModels;
+  }
+
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
     this.name = name;
   }
 
-  public int getId() { return id; }
-  public String getName() { return name; }
-
-  public static void addClient(ClientModel client) {
-    clientDAO.addClient(client);
+  public List<RecipeModel> getRecipes() {
+    return recipeModels;
   }
 
-  public static List<ClientModel> getAllClients() {
-    return clientDAO.getAllClients();
+  public void setRecipes(List<RecipeModel> recipeModels) {
+    this.recipeModels = recipeModels;
+  }
+
+  public List<ExerciseModel> getExercises() {
+    return exerciseModels;
+  }
+
+  public void setExercises(List<ExerciseModel> exerciseModels) {
+    this.exerciseModels = exerciseModels;
   }
 }

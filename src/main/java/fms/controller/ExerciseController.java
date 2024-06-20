@@ -9,6 +9,6 @@ public class ExerciseController {
   private Label exerciseLabel;
   
   public void initialize() {
-    exerciseLabel.setText("Exercise Info");
+    exerciseLabel.setText("ExerciseModel Info");
   }
 }

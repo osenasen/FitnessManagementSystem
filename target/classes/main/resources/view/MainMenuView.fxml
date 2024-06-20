@@ -22,7 +22,8 @@
    <AnchorPane layoutX="250.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="394.0" prefWidth="250.0">
       <children>
          <ListView fx:id="clientListView" layoutX="10.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#handleClientSelection" prefHeight="295.0" prefWidth="230.0" AnchorPane.bottomAnchor="85.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="14.0" />
-          <Button layoutX="32.0" layoutY="327.0" mnemonicParsing="false" onAction="#handleAddClient" prefHeight="40.0" prefWidth="187.0" text="Add Client"/>
+         <Button layoutX="32.0" layoutY="327.0" mnemonicParsing="false" onAction="#handleAddClient" prefHeight="40.0" prefWidth="187.0" text="Add Client"/>
+         <Button layoutX="32.0" layoutY="377.0" mnemonicParsing="false" onAction="#handleRemoveClient" prefHeight="40.0" prefWidth="187.0" text="Remove Client"/>
       </children>
    </AnchorPane>
 </AnchorPane>

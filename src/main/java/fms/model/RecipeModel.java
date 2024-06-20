@@ -1,26 +1,22 @@
 package fms.model;
 
-import fms.utils.RecipeDAO;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
+import java.io.Serializable;
 
-import java.util.List;
+public class RecipeModel implements Serializable {
+  private static final long serialVersionUID = 1L;
 
-public class RecipeModel {
   private int id;
   private String name;
-  private String imagePath; // placeholder for image link
+  private String imagePath;
   private int proteins;
   private int carbs;
   private int calories;
   private String linkPlaceholder;
-  private BooleanProperty selected = new SimpleBooleanProperty(false);
-
-  private static RecipeDAO recipeDAO = new RecipeDAO();
-
-  // Constructors
+  private boolean selected;
+  // Default constructor
   public RecipeModel() {}
 
+  // Constructor with parameters
   public RecipeModel(int id, String name, String imagePath, int proteins, int carbs, int calories, String linkPlaceholder) {
     this.id = id;
     this.name = name;
@@ -31,46 +27,67 @@ public class RecipeModel {
     this.linkPlaceholder = linkPlaceholder;
   }
 
-  // Getters and setters
-  public int getId() { return id; }
-  public void setId(int id) { this.id = id; }
+  public int getId() {
+    return id;
+  }
 
-  public String getName() { return name; }
-  public void setName(String name) { this.name = name; }
+  public void setId(int id) {
+    this.id = id;
+  }
 
-  public String getImagePath() { return imagePath; }
-  public void setImagePath(String imagePath) { this.imagePath = imagePath; }
+  public String getName() {
+    return name;
+  }
 
-  public int getProteins() { return proteins; }
-  public void setProteins(int proteins) { this.proteins = proteins; }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-  public int getCarbs() { return carbs; }
-  public void setCarbs(int carbs) { this.carbs = carbs; }
+  public String getImagePath() {
+    return imagePath;
+  }
 
-  public int getCalories() { return calories; }
-  public void setCalories(int calories) { this.calories = calories; }
+  public void setImagePath(String imagePath) {
+    this.imagePath = imagePath;
+  }
 
-  public String getLinkPlaceholder() { return linkPlaceholder; }
-  public void setLinkPlaceholder(String linkPlaceholder) { this.linkPlaceholder = linkPlaceholder; }
+  public int getProteins() {
+    return proteins;
+  }
 
-  public BooleanProperty selectedProperty() {
-    return selected;
+  public void setProteins(int proteins) {
+    this.proteins = proteins;
+  }
+
+  public int getCarbs() {
+    return carbs;
+  }
+
+  public void setCarbs(int carbs) {
+    this.carbs = carbs;
+  }
+
+  public int getCalories() {
+    return calories;
+  }
+
+  public void setCalories(int calories) {
+    this.calories = calories;
+  }
+
+  public String getLinkPlaceholder() {
+    return linkPlaceholder;
+  }
+
+  public void setLinkPlaceholder(String linkPlaceholder) {
+    this.linkPlaceholder = linkPlaceholder;
   }
 
   public boolean isSelected() {
-    return selected.get();
+    return selected;
   }
 
   public void setSelected(boolean selected) {
-    this.selected.set(selected);
-  }
-
-  // Database methods
-  public static void addRecipe(RecipeModel recipe) {
-    recipeDAO.addRecipe(recipe);
-  }
-
-  public static List<RecipeModel> getAllRecipes() {
-    return recipeDAO.getAllRecipes();
+    this.selected = selected;
   }
 }

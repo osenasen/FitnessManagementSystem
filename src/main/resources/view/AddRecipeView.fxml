@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="fms.controller.AddRecipeController" spacing="10" alignment="CENTER">
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
+    <TableView fx:id="recipeTableView">
+        <columns>
+            <TableColumn fx:id="selectColumn" text="Select" prefWidth="75"/>
+            <TableColumn fx:id="nameColumn" text="Name" prefWidth="150"/>
+            <TableColumn fx:id="proteinsColumn" text="Proteins" prefWidth="75"/>
+            <TableColumn fx:id="carbsColumn" text="Carbs" prefWidth="75"/>
+            <TableColumn fx:id="caloriesColumn" text="Calories" prefWidth="75"/>
+            <TableColumn fx:id="linkPlaceholderColumn" text="Link" prefWidth="150"/>
+        </columns>
+    </TableView>
+    <Button text="Add Selected Recipes" onAction="#handleAddRecipes"/>
+</VBox>

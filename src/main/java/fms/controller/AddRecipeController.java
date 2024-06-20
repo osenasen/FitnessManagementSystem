@@ -1,8 +1,6 @@
 package fms.controller;
 
 import fms.model.RecipeModel;
-import fms.utils.ClientNutritionDAO;
-import fms.utils.RecipeDAO;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -26,14 +24,15 @@ public class AddRecipeController {
     private TableColumn<RecipeModel, Integer> caloriesColumn;
     @FXML
     private TableColumn<RecipeModel, String> linkPlaceholderColumn;
-    
-    private RecipeDAO recipeDAO = new RecipeDAO();
-    private ClientNutritionDAO clientNutritionDAO = new ClientNutritionDAO();
+
     private int clientId;
-    
-    public void initialize(int clientId) {
+
+    public void setClientId(int clientId) {
         this.clientId = clientId;
-        
+    }
+
+    @FXML
+    public void initialize() {
         selectColumn.setCellValueFactory(new PropertyValueFactory<>("selected"));
         selectColumn.setCellFactory(CheckBoxTableCell.forTableColumn(selectColumn));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -41,12 +40,12 @@ public class AddRecipeController {
         carbsColumn.setCellValueFactory(new PropertyValueFactory<>("carbs"));
         caloriesColumn.setCellValueFactory(new PropertyValueFactory<>("calories"));
         linkPlaceholderColumn.setCellValueFactory(new PropertyValueFactory<>("linkPlaceholder"));
-        
+
         List<RecipeModel> recipes = RecipeModel.getAllRecipes();
         recipeTableView.getItems().setAll(recipes);
-        
+
         // Mark the already added recipes as selected
-        List<RecipeModel> clientRecipes = clientNutritionDAO.getRecipesForClient(clientId);
+        List<RecipeModel> clientRecipes = RecipeModel.getRecipesForClient(clientId);
         for (RecipeModel recipe : recipes) {
             for (RecipeModel clientRecipe : clientRecipes) {
                 if (recipe.getId() == clientRecipe.getId()) {
@@ -55,19 +54,19 @@ public class AddRecipeController {
             }
         }
     }
-    
+
     @FXML
     private void handleAddRecipes() {
         List<RecipeModel> recipes = recipeTableView.getItems();
-        
+
         for (RecipeModel recipe : recipes) {
             if (recipe.isSelected()) {
-                clientNutritionDAO.addRecipeToClient(clientId, recipe.getId());
+                RecipeModel.addRecipeToClient(clientId, recipe.getId());
             } else {
-                clientNutritionDAO.removeRecipeFromClient(clientId, recipe.getId());
+                RecipeModel.removeRecipeFromClient(clientId, recipe.getId());
             }
         }
-        
+
         // Close the Add Recipe window
         recipeTableView.getScene().getWindow().hide();
     }

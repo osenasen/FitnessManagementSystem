@@ -1,6 +1,8 @@
 package fms.controller;
 
 import fms.model.RecipeModel;
+import fms.model.ClientModel;
+import fms.util.DataManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -8,6 +10,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.CheckBoxTableCell;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AddRecipeController {
     @FXML
@@ -41,33 +44,36 @@ public class AddRecipeController {
         caloriesColumn.setCellValueFactory(new PropertyValueFactory<>("calories"));
         linkPlaceholderColumn.setCellValueFactory(new PropertyValueFactory<>("linkPlaceholder"));
 
-        List<RecipeModel> recipes = RecipeModel.getAllRecipes();
+        List<RecipeModel> recipes = DataManager.loadRecipes();
         recipeTableView.getItems().setAll(recipes);
 
-        // Mark the already added recipes as selected
-        List<RecipeModel> clientRecipes = RecipeModel.getRecipesForClient(clientId);
+        List<RecipeModel> clientRecipes = getClientRecipes();
         for (RecipeModel recipe : recipes) {
-            for (RecipeModel clientRecipe : clientRecipes) {
-                if (recipe.getId() == clientRecipe.getId()) {
-                    recipe.setSelected(true);
-                }
+            if (clientRecipes.stream().anyMatch(r -> r.getId() == recipe.getId())) {
+                recipe.setSelected(true);
             }
         }
     }
 
+    private List<RecipeModel> getClientRecipes() {
+        List<ClientModel> clients = DataManager.loadClients();
+        ClientModel client = clients.stream().filter(c -> c.getId() == clientId).findFirst().orElse(null);
+        return client != null ? client.getRecipes() : List.of();
+    }
+
     @FXML
     private void handleAddRecipes() {
-        List<RecipeModel> recipes = recipeTableView.getItems();
+        List<RecipeModel> selectedRecipes = recipeTableView.getItems().stream()
+                .filter(RecipeModel::isSelected)
+                .collect(Collectors.toList());
 
-        for (RecipeModel recipe : recipes) {
-            if (recipe.isSelected()) {
-                RecipeModel.addRecipeToClient(clientId, recipe.getId());
-            } else {
-                RecipeModel.removeRecipeFromClient(clientId, recipe.getId());
-            }
+        List<ClientModel> clients = DataManager.loadClients();
+        ClientModel client = clients.stream().filter(c -> c.getId() == clientId).findFirst().orElse(null);
+        if (client != null) {
+            client.setRecipes(selectedRecipes);
+            DataManager.saveClients(clients);
         }
 
-        // Close the Add Recipe window
         recipeTableView.getScene().getWindow().hide();
     }
 }

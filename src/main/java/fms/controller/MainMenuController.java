@@ -9,6 +9,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
@@ -90,6 +92,20 @@ public class MainMenuController {
       loadClients();
     } catch (Exception e) {
       e.printStackTrace();
+    }
+  }
+
+  @FXML
+  private void handleRemoveClient() {
+    ClientModel selectedClient = clientListView.getSelectionModel().getSelectedItem();
+    if (selectedClient != null) {
+      Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this client?", ButtonType.YES, ButtonType.NO);
+      alert.showAndWait().ifPresent(response -> {
+        if (response == ButtonType.YES) {
+          clients.remove(selectedClient);
+          DataManager.saveClients(clients);
+        }
+      });
     }
   }
 

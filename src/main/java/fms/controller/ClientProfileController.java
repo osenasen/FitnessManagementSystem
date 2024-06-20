@@ -1,21 +1,19 @@
 package fms.controller;
 
+import fms.model.ClientModel;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
 import java.io.IOException;
-import fms.model.ClientModel;
 
 public class ClientProfileController {
 
   @FXML
-  private Pane centerPane;
-
+  private BorderPane clientProfilePane;
   @FXML
   private Label clientNameLabel;
-
   @FXML
   private Label clientIdLabel;
 
@@ -23,43 +21,43 @@ public class ClientProfileController {
 
   public void setClient(ClientModel client) {
     this.client = client;
-    displayClientData();
-    showDashboardView();
-  }
-
-  private void displayClientData() {
-    if (client != null) {
-      clientNameLabel.setText(client.getName());
-      clientIdLabel.setText(String.valueOf(client.getId()));
-    }
-  }
-
-  @FXML
-  private void showNutritionView() {
-    loadView("/view/NutritionFragment.fxml");
-  }
-
-  @FXML
-  private void showExerciseView() {
-    loadView("/view/ExerciseViewFragment.fxml");
+    clientNameLabel.setText(client.getName());
+    clientIdLabel.setText(String.valueOf(client.getId()));
+    showDashboardView(); // Load dashboard by default
   }
 
   @FXML
   private void showDashboardView() {
-    loadView("/view/DashboardViewFragment.fxml");
+    loadFragment("/view/DashboardFragment.fxml");
   }
 
   @FXML
   private void showGeneralInfoView() {
-    loadView("/view/GeneralInfoViewFragment.fxml");
+    loadFragment("/view/GeneralInfoFragment.fxml");
   }
 
-  private void loadView(String fxmlFile) {
+  @FXML
+  private void showNutritionView() {
+    loadFragment("/view/NutritionFragment.fxml");
+  }
+
+  @FXML
+  private void showExerciseView() {
+    loadFragment("/view/ExerciseFragment.fxml");
+  }
+
+  private void loadFragment(String fragmentPath) {
     try {
-      FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
-      Parent view = loader.load();
-      centerPane.getChildren().clear();
-      centerPane.getChildren().add(view);
+      FXMLLoader loader = new FXMLLoader(getClass().getResource(fragmentPath));
+      Parent fragment = loader.load();
+      clientProfilePane.setCenter(fragment);
+
+      // If the fragment is NutritionFragment, pass the client ID to it
+      if (fragmentPath.contains("NutritionFragment")) {
+        NutritionFragmentController controller = loader.getController();
+        controller.setClientId(client.getId());
+      }
+
     } catch (IOException e) {
       e.printStackTrace();
     }

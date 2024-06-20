@@ -1,44 +1,48 @@
 package fms.controller;
 
 import fms.model.RecipeModel;
+import fms.model.ClientModel;
+import fms.util.DataManager;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
+import javafx.geometry.Insets;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 
-import java.io.IOException;
 import java.util.List;
 
 public class NutritionFragmentController {
+
     @FXML
     private GridPane gridPane;
+    @FXML
+    private Button addRecipeButton;
 
     private int clientId;
 
     public void setClientId(int clientId) {
         this.clientId = clientId;
-        initialize();
+        loadRecipes();
     }
 
-    private void initialize() {
-        List<RecipeModel> recipes = RecipeModel.getRecipesForClient(clientId);
-        displayRecipes(recipes);
-    }
-
-    private void displayRecipes(List<RecipeModel> recipes) {
+    private void loadRecipes() {
+        List<RecipeModel> clientRecipes = getClientRecipes();
         gridPane.getChildren().clear();
         int column = 0;
-        int row = 0;
-        for (RecipeModel recipe : recipes) {
-            VBox vBox = createRecipeVBox(recipe);
-            gridPane.add(vBox, column++, row);
+        int row = 1;
+
+        for (RecipeModel recipe : clientRecipes) {
+            VBox recipeBox = createRecipeBox(recipe);
+            gridPane.add(recipeBox, column++, row);
+
             if (column == 3) {
                 column = 0;
                 row++;
@@ -46,45 +50,49 @@ public class NutritionFragmentController {
         }
     }
 
-    private VBox createRecipeVBox(RecipeModel recipe) {
-        VBox vBox = new VBox();
+    private List<RecipeModel> getClientRecipes() {
+        List<ClientModel> clients = DataManager.loadClients();
+        ClientModel client = clients.stream().filter(c -> c.getId() == clientId).findFirst().orElse(null);
+        return client != null ? client.getRecipes() : List.of();
+    }
+
+    private VBox createRecipeBox(RecipeModel recipe) {
+        VBox vbox = new VBox();
+        vbox.setPadding(new Insets(10));
+        vbox.setSpacing(5);
+
         Text name = new Text(recipe.getName());
-        Image image;
-        try {
-            image = new Image(getClass().getResourceAsStream("/images/" + recipe.getImagePath()));
-        } catch (NullPointerException e) {
-            image = new Image(getClass().getResourceAsStream("/images/default.jpg")); // Use a default image if not found
-        }
-        ImageView imageView = new ImageView(image);
-        imageView.setFitWidth(200); // Set max width
-        imageView.setPreserveRatio(true); // Maintain aspect ratio
+        ImageView imageView = new ImageView(new Image(getClass().getResourceAsStream("/images/" + recipe.getImagePath())));
+        imageView.setFitWidth(100);
+        imageView.setFitHeight(100);
+
         Text proteins = new Text("Proteins: " + recipe.getProteins());
         Text carbs = new Text("Carbs: " + recipe.getCarbs());
         Text calories = new Text("Calories: " + recipe.getCalories());
+        Text link = new Text("Recipe: " + recipe.getLinkPlaceholder());
 
-        vBox.getChildren().addAll(name, imageView, proteins, carbs, calories);
-        return vBox;
+        vbox.getChildren().addAll(name, imageView, proteins, carbs, calories, link);
+        return vbox;
     }
 
     @FXML
     private void handleOpenAddRecipeView() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fms/view/AddRecipe.fxml"));
-            Parent parent = fxmlLoader.load();
-
-            AddRecipeController controller = fxmlLoader.getController();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/AddRecipeView.fxml"));
+            Parent root = loader.load();
+            AddRecipeController controller = loader.getController();
             controller.setClientId(clientId);
 
-            Scene scene = new Scene(parent);
             Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setScene(scene);
             stage.setTitle("Add Recipe");
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
 
-            // Reload the recipes after the AddRecipe window is closed
-            initialize();
-        } catch (IOException e) {
+            // Reload recipes after adding
+            loadRecipes();
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

@@ -2,7 +2,7 @@ package fms.model;
 
 import java.io.Serializable;
 
-public class Recipe implements Serializable {
+public class RecipeModel implements Serializable {
   private static final long serialVersionUID = 1L;
 
   private int id;
@@ -12,12 +12,12 @@ public class Recipe implements Serializable {
   private int carbs;
   private int calories;
   private String linkPlaceholder;
-
+  private boolean selected;
   // Default constructor
-  public Recipe() {}
+  public RecipeModel() {}
 
   // Constructor with parameters
-  public Recipe(int id, String name, String imagePath, int proteins, int carbs, int calories, String linkPlaceholder) {
+  public RecipeModel(int id, String name, String imagePath, int proteins, int carbs, int calories, String linkPlaceholder) {
     this.id = id;
     this.name = name;
     this.imagePath = imagePath;
@@ -81,5 +81,13 @@ public class Recipe implements Serializable {
 
   public void setLinkPlaceholder(String linkPlaceholder) {
     this.linkPlaceholder = linkPlaceholder;
+  }
+
+  public boolean isSelected() {
+    return selected;
+  }
+
+  public void setSelected(boolean selected) {
+    this.selected = selected;
   }
 }

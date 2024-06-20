@@ -1,14 +1,1 @@
-[
-  {
-    "id": 1,
-    "name": "Client A",
-    "recipes": [1, 2],
-    "exercises": [1, 2]
-  },
-  {
-    "id": 2,
-    "name": "Client B",
-    "recipes": [3, 4],
-    "exercises": [3, 4]
-  }
-]
+[{"id":1,"name":"Joshua Selbstaedt","exercises":null,"recipes":null},{"id":2,"name":"Amelie  Hu","exercises":null,"recipes":null}]

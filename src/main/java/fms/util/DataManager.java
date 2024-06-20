@@ -2,16 +2,12 @@ package fms.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
+import fms.model.*;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import fms.model.ClientModel;
-import fms.model.UserModel;
-import fms.model.Recipe;
-import fms.model.Exercise;
 
 public class DataManager {
     private static final String USER_FILE = "src/main/resources/json/user_data.json";
@@ -53,15 +49,15 @@ public class DataManager {
         }
     }
 
-    public static List<Recipe> loadRecipes() {
+    public static List<RecipeModel> loadRecipes() {
         try {
-            return mapper.readValue(new File(RECIPE_FILE), new TypeReference<List<Recipe>>() {});
+            return mapper.readValue(new File(RECIPE_FILE), new TypeReference<List<RecipeModel>>() {});
         } catch (IOException e) {
             return new ArrayList<>();
         }
     }
 
-    public static void saveRecipes(List<Recipe> recipes) {
+    public static void saveRecipes(List<RecipeModel> recipes) {
         try {
             mapper.writeValue(new File(RECIPE_FILE), recipes);
         } catch (IOException e) {
@@ -69,15 +65,15 @@ public class DataManager {
         }
     }
 
-    public static List<Exercise> loadExercises() {
+    public static List<ExerciseModel> loadExercises() {
         try {
-            return mapper.readValue(new File(EXERCISE_FILE), new TypeReference<List<Exercise>>() {});
+            return mapper.readValue(new File(EXERCISE_FILE), new TypeReference<List<ExerciseModel>>() {});
         } catch (IOException e) {
             return new ArrayList<>();
         }
     }
 
-    public static void saveExercises(List<Exercise> exercises) {
+    public static void saveExercises(List<ExerciseModel> exercises) {
         try {
             mapper.writeValue(new File(EXERCISE_FILE), exercises);
         } catch (IOException e) {

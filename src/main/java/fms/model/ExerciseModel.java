@@ -2,7 +2,7 @@ package fms.model;
 
 import java.io.Serializable;
 
-public class Exercise implements Serializable {
+public class ExerciseModel implements Serializable {
   private static final long serialVersionUID = 1L;
 
   private int id;
@@ -11,10 +11,10 @@ public class Exercise implements Serializable {
   private int duration;
 
   // Default constructor
-  public Exercise() {}
+  public ExerciseModel() {}
 
   // Constructor with parameters
-  public Exercise(int id, String name, String description, int duration) {
+  public ExerciseModel(int id, String name, String description, int duration) {
     this.id = id;
     this.name = name;
     this.description = description;

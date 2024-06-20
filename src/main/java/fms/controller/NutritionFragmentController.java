@@ -36,16 +36,18 @@ public class NutritionFragmentController {
     private void loadRecipes() {
         List<RecipeModel> clientRecipes = getClientRecipes();
         gridPane.getChildren().clear();
-        int column = 0;
-        int row = 1;
+        if (clientRecipes != null) {
+            int column = 0;
+            int row = 1;
 
-        for (RecipeModel recipe : clientRecipes) {
-            VBox recipeBox = createRecipeBox(recipe);
-            gridPane.add(recipeBox, column++, row);
+            for (RecipeModel recipe : clientRecipes) {
+                VBox recipeBox = createRecipeBox(recipe);
+                gridPane.add(recipeBox, column++, row);
 
-            if (column == 3) {
-                column = 0;
-                row++;
+                if (column == 3) {
+                    column = 0;
+                    row++;
+                }
             }
         }
     }

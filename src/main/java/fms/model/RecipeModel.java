@@ -1,5 +1,8 @@
 package fms.model;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+
 import java.io.Serializable;
 
 public class RecipeModel implements Serializable {
@@ -12,11 +15,10 @@ public class RecipeModel implements Serializable {
   private int carbs;
   private int calories;
   private String linkPlaceholder;
-  private boolean selected;
-  // Default constructor
+  private transient BooleanProperty selected = new SimpleBooleanProperty(false);
+
   public RecipeModel() {}
 
-  // Constructor with parameters
   public RecipeModel(int id, String name, String imagePath, int proteins, int carbs, int calories, String linkPlaceholder) {
     this.id = id;
     this.name = name;
@@ -83,11 +85,15 @@ public class RecipeModel implements Serializable {
     this.linkPlaceholder = linkPlaceholder;
   }
 
-  public boolean isSelected() {
+  public BooleanProperty selectedProperty() {
     return selected;
   }
 
+  public boolean isSelected() {
+    return selected.get();
+  }
+
   public void setSelected(boolean selected) {
-    this.selected = selected;
+    this.selected.set(selected);
   }
 }

@@ -10,10 +10,9 @@ public class ExerciseModel implements Serializable {
   private String description;
   private int duration;
 
-  // Default constructor
-  public ExerciseModel() {}
 
-  // Constructor with parameters
+  public ExerciseModel() {}
+  
   public ExerciseModel(int id, String name, String description, int duration) {
     this.id = id;
     this.name = name;

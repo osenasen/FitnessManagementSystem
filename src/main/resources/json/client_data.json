@@ -1,1 +1,1 @@
-[{"id":1,"name":"Joshua Selbstaedt","exercises":null,"recipes":[]},{"id":2,"name":"Amelie  Hu","exercises":null,"recipes":null}]
+[{"id":1,"name":"Joshua Selbstaedt","recipes":[{"id":1,"name":"Recipe 1","imagePath":"/view/images/image1.jpg","proteins":10,"carbs":20,"calories":300,"linkPlaceholder":"http://example.com/recipe1","selected":true}],"exercises":null}]

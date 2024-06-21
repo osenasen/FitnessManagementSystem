@@ -17,6 +17,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
+import java.io.IOException;
 import java.util.List;
 
 public class NutritionFragmentController {
@@ -78,23 +79,21 @@ public class NutritionFragmentController {
     }
     
     @FXML
-    private void handleOpenAddRecipeView() {
+    public void handleOpenAddRecipeView() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/AddRecipeView.fxml"));
             Parent root = loader.load();
+
+            // Pass the clientId to the AddRecipeController
             AddRecipeController controller = loader.getController();
-            controller.setClientId(clientId);
-            
+            controller.setClientId(this.clientId); // Assume this.clientId is set
+
             Stage stage = new Stage();
-            stage.setTitle("Add Recipe");
             stage.setScene(new Scene(root));
+            stage.setTitle("Add Recipes");
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
-            
-            // Reload recipes after adding
-            loadRecipes();
-            
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

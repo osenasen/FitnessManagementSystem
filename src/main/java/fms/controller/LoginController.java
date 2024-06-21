@@ -35,6 +35,7 @@ public class LoginController {
     String password = passwordField.getText();
 
     if (username.equals(userModel.getUsername()) && password.equals(userModel.getPassword())) {
+
       userModel.setUsername(username);
 
       Stage stage = (Stage) usernameField.getScene().getWindow();

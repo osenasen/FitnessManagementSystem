@@ -21,7 +21,7 @@ public class DataManager {
         try {
             return mapper.readValue(new File(USER_FILE), UserModel.class);
         } catch (IOException e) {
-            return new UserModel("defaultUser", "password");
+            return new UserModel("User", "password");
         }
     }
 

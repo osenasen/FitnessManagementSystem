@@ -2,13 +2,15 @@ package fms.controller;
 
 import fms.model.ClientModel;
 import fms.model.UserModel;
-import fms.utils.UserDAO;
+import fms.util.DataManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
@@ -24,11 +26,10 @@ public class MainMenuController {
   private ListView<ClientModel> clientListView;
 
   private ObservableList<ClientModel> clients = FXCollections.observableArrayList();
-  private UserDAO userDAO = new UserDAO();
   private UserModel userModel;
 
   public void initialize() {
-    userModel = userDAO.loadUser();
+    userModel = DataManager.loadUser();
     usernameLabel.setText("Welcome, " + userModel.getUsername());
 
     loadClients();
@@ -94,8 +95,22 @@ public class MainMenuController {
     }
   }
 
+  @FXML
+  private void handleRemoveClient() {
+    ClientModel selectedClient = clientListView.getSelectionModel().getSelectedItem();
+    if (selectedClient != null) {
+      Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this client?", ButtonType.YES, ButtonType.NO);
+      alert.showAndWait().ifPresent(response -> {
+        if (response == ButtonType.YES) {
+          clients.remove(selectedClient);
+          DataManager.saveClients(clients);
+        }
+      });
+    }
+  }
+
   private void loadClients() {
-    clients.setAll(ClientModel.getAllClients());
+    clients.setAll(DataManager.loadClients());
     clientListView.setItems(clients);
     clientListView.setCellFactory(param -> new ClientListCell());
   }

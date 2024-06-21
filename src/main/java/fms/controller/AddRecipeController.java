@@ -1,15 +1,18 @@
 package fms.controller;
 
 import fms.model.RecipeModel;
-import fms.utils.ClientNutritionDAO;
-import fms.utils.RecipeDAO;
+import fms.model.ClientModel;
+import fms.util.DataManager;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.CheckBoxTableCell;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AddRecipeController {
     @FXML
@@ -26,49 +29,61 @@ public class AddRecipeController {
     private TableColumn<RecipeModel, Integer> caloriesColumn;
     @FXML
     private TableColumn<RecipeModel, String> linkPlaceholderColumn;
-    
-    private RecipeDAO recipeDAO = new RecipeDAO();
-    private ClientNutritionDAO clientNutritionDAO = new ClientNutritionDAO();
+
     private int clientId;
-    
-    public void initialize(int clientId) {
+
+    public void setClientId(int clientId) {
         this.clientId = clientId;
-        
-        selectColumn.setCellValueFactory(new PropertyValueFactory<>("selected"));
-        selectColumn.setCellFactory(CheckBoxTableCell.forTableColumn(selectColumn));
+    }
+
+    @FXML
+    public void initialize() {
+        selectColumn.setCellValueFactory(cellData -> cellData.getValue().selectedProperty());
+        selectColumn.setCellFactory(column -> new CheckBoxTableCell<>());
+        selectColumn.setEditable(true);
+
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         proteinsColumn.setCellValueFactory(new PropertyValueFactory<>("proteins"));
         carbsColumn.setCellValueFactory(new PropertyValueFactory<>("carbs"));
         caloriesColumn.setCellValueFactory(new PropertyValueFactory<>("calories"));
         linkPlaceholderColumn.setCellValueFactory(new PropertyValueFactory<>("linkPlaceholder"));
-        
-        List<RecipeModel> recipes = RecipeModel.getAllRecipes();
-        recipeTableView.getItems().setAll(recipes);
-        
-        // Mark the already added recipes as selected
-        List<RecipeModel> clientRecipes = clientNutritionDAO.getRecipesForClient(clientId);
-        for (RecipeModel recipe : recipes) {
-            for (RecipeModel clientRecipe : clientRecipes) {
-                if (recipe.getId() == clientRecipe.getId()) {
-                    recipe.setSelected(true);
-                }
-            }
-        }
+
+        recipeTableView.setEditable(true);
+
+        loadRecipes();
     }
-    
+
+    private void loadRecipes() {
+        List<RecipeModel> recipes = DataManager.loadRecipes();
+        List<RecipeModel> clientRecipes = getClientRecipes();
+
+        for (RecipeModel recipe : recipes) {
+            recipe.setSelected(clientRecipes.stream().anyMatch(r -> r.getId() == recipe.getId()));
+        }
+        recipeTableView.setItems(FXCollections.observableArrayList(recipes));
+    }
+
+    private List<RecipeModel> getClientRecipes() {
+        List<ClientModel> clients = DataManager.loadClients();
+        ClientModel client = clients.stream().filter(c -> c.getId() == clientId).findFirst().orElse(null);
+        return client != null ? client.getRecipes() : List.of();
+    }
+
     @FXML
     private void handleAddRecipes() {
-        List<RecipeModel> recipes = recipeTableView.getItems();
-        
-        for (RecipeModel recipe : recipes) {
-            if (recipe.isSelected()) {
-                clientNutritionDAO.addRecipeToClient(clientId, recipe.getId());
-            } else {
-                clientNutritionDAO.removeRecipeFromClient(clientId, recipe.getId());
-            }
+        List<RecipeModel> selectedRecipes = recipeTableView.getItems().stream()
+                .filter(RecipeModel::isSelected)
+                .collect(Collectors.toList());
+
+        List<ClientModel> clients = DataManager.loadClients();
+        ClientModel client = clients.stream().filter(c -> c.getId() == clientId).findFirst().orElse(null);
+        if (client != null) {
+            client.setRecipes(selectedRecipes);
+            DataManager.saveClients(clients);
         }
         
-        // Close the Add Recipe window
-        recipeTableView.getScene().getWindow().hide();
+        Stage stage = (Stage) recipeTableView.getScene().getWindow();
+        stage.close();
     }
 }
+

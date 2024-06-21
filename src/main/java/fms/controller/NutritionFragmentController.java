@@ -1,87 +1,126 @@
 package fms.controller;
 
 import fms.model.RecipeModel;
-import fms.utils.ClientNutritionDAO;
+import fms.model.ClientModel;
+import fms.util.DataManager;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
+import javafx.geometry.Insets;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 
 import java.io.IOException;
 import java.util.List;
 
 public class NutritionFragmentController {
+    
     @FXML
     private GridPane gridPane;
-
-    private ClientNutritionDAO clientNutritionDAO = new ClientNutritionDAO();
-
-    public void initialize(int clientId) {
-        List<RecipeModel> recipes = clientNutritionDAO.getRecipesForClient(clientId);
-        displayRecipes(recipes);
+    @FXML
+    private Button addRecipeButton;
+    
+    private int clientId;
+    
+    public void setClientId(int clientId) {
+        this.clientId = clientId;
+        loadRecipes();
     }
-
-    private void displayRecipes(List<RecipeModel> recipes) {
-        int column = 0;
-        int row = 1;
-        for (RecipeModel recipe : recipes) {
-            VBox vBox = createRecipeVBox(recipe);
-            gridPane.add(vBox, column++, row);
-            if (column == 3) {
-                column = 0;
-                row++;
+    
+    private void loadRecipes() {
+        List<RecipeModel> clientRecipes = getClientRecipes();
+        gridPane.getChildren().clear();
+        if (clientRecipes != null && !clientRecipes.isEmpty()) {
+            int column = 0;
+            int row = 0;
+            
+            for (RecipeModel recipe : clientRecipes) {
+                VBox recipeBox = createRecipeBox(recipe);
+                gridPane.add(recipeBox, column, row);
+                
+                column++;
+                if (column == 3) {
+                    column = 0;
+                    row++;
+                }
             }
         }
     }
-
-    private VBox createRecipeVBox(RecipeModel recipe) {
-        VBox vBox = new VBox();
+    
+    private List<RecipeModel> getClientRecipes() {
+        List<ClientModel> clients = DataManager.loadClients();
+        ClientModel client = clients.stream().filter(c -> c.getId() == clientId).findFirst().orElse(null);
+        return client != null ? client.getRecipes() : List.of();
+    }
+    
+    private VBox createRecipeBox(RecipeModel recipe) {
+        VBox vbox = new VBox();
+        vbox.setPadding(new Insets(10));
+        vbox.setSpacing(5);
+        
         Text name = new Text(recipe.getName());
-        Image image;
+        System.out.println("Loading image from path: " + recipe.getImagePath());
+        ImageView imageView;
         try {
-            image = new Image(getClass().getResourceAsStream("/images/" + recipe.getImagePath()));
-        } catch (NullPointerException e) {
-            image = new Image(getClass().getResourceAsStream("/images/default.jpg")); // Use a default image if not found
+            String imagePath = recipe.getImagePath();
+            if (imagePath != null && !imagePath.isEmpty()) {
+                Image image = new Image(getClass().getResourceAsStream(imagePath));
+                imageView = new ImageView(image);
+                imageView.setFitWidth(100);
+                imageView.setFitHeight(100);
+            } else {
+                // Use a default image or placeholder
+                imageView = new ImageView(new Image(getClass().getResourceAsStream("/images/default_recipe.png")));
+                imageView.setFitWidth(100);
+                imageView.setFitHeight(100);
+            }
+        } catch (Exception e) {
+            // If there's an error loading the image, use a default or log the error
+            System.err.println("Error loading image for recipe: " + recipe.getName());
+            e.printStackTrace();
+            imageView = new ImageView(new Image(getClass().getResourceAsStream("/images/default_recipe.png")));
+            imageView.setFitWidth(100);
+            imageView.setFitHeight(100);
         }
-        ImageView imageView = new ImageView(image);
-        imageView.setFitWidth(200); // Set max width
-        imageView.setPreserveRatio(true); // Maintain aspect ratio
+        
         Text proteins = new Text("Proteins: " + recipe.getProteins());
         Text carbs = new Text("Carbs: " + recipe.getCarbs());
         Text calories = new Text("Calories: " + recipe.getCalories());
-
-        vBox.getChildren().addAll(name, imageView, proteins, carbs, calories);
-        return vBox;
+        Text link = new Text("Recipe: " + recipe.getLinkPlaceholder());
+        
+        vbox.getChildren().addAll(name, imageView, proteins, carbs, calories, link);
+        return vbox;
     }
-
-
+    
     @FXML
-    private void handleOpenAddRecipeView() {
+    public void handleOpenAddRecipeView() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/AddRecipe.fxml"));
-            Parent parent = fxmlLoader.load();
-            Scene scene = new Scene(parent);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/AddRecipeView.fxml"));
+            Parent root = loader.load();
+            
+            AddRecipeController controller = loader.getController();
+            controller.setClientId(this.clientId);
+            
             Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Add Recipes");
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setScene(scene);
-            stage.setTitle("Add Recipe");
             stage.showAndWait();
-            // Reload the recipes after the AddRecipe window is closed
-            initialize(getCurrentClientId()); // Replace with the actual method to get the current client ID
+            
+            loadRecipes();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
-    private int getCurrentClientId() {
-        // Implement this method to return the current client ID
-        return 1; // Placeholder
+    
+    public void refreshView() {
+        loadRecipes();
     }
 }

@@ -52,11 +52,11 @@ public class ClientProfileController {
       Parent fragment = loader.load();
       clientProfilePane.setCenter(fragment);
       
-      // If the fragment is NutritionFragment, pass the client ID to it
-      if (fragmentPath.contains("NutritionFragment")) {
-        NutritionFragmentController controller = loader.getController();
-        controller.setClientId(client.getId());
+      Object controller = loader.getController();
+      if (controller instanceof NutritionFragmentController) {
+        ((NutritionFragmentController) controller).setClientId(client.getId());
       }
+      // Add similar conditions for other fragment controllers if needed
       
     } catch (IOException e) {
       e.printStackTrace();

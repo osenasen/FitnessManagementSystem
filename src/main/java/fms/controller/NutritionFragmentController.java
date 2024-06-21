@@ -37,14 +37,15 @@ public class NutritionFragmentController {
     private void loadRecipes() {
         List<RecipeModel> clientRecipes = getClientRecipes();
         gridPane.getChildren().clear();
-        if (clientRecipes != null) {
+        if (clientRecipes != null && !clientRecipes.isEmpty()) {
             int column = 0;
-            int row = 1;
+            int row = 0;
             
             for (RecipeModel recipe : clientRecipes) {
                 VBox recipeBox = createRecipeBox(recipe);
-                gridPane.add(recipeBox, column++, row);
+                gridPane.add(recipeBox, column, row);
                 
+                column++;
                 if (column == 3) {
                     column = 0;
                     row++;
@@ -65,9 +66,29 @@ public class NutritionFragmentController {
         vbox.setSpacing(5);
         
         Text name = new Text(recipe.getName());
-        ImageView imageView = new ImageView(new Image(getClass().getResourceAsStream("/images/" + recipe.getImagePath())));
-        imageView.setFitWidth(100);
-        imageView.setFitHeight(100);
+        System.out.println("Loading image from path: " + recipe.getImagePath());
+        ImageView imageView;
+        try {
+            String imagePath = recipe.getImagePath();
+            if (imagePath != null && !imagePath.isEmpty()) {
+                Image image = new Image(getClass().getResourceAsStream(imagePath));
+                imageView = new ImageView(image);
+                imageView.setFitWidth(100);
+                imageView.setFitHeight(100);
+            } else {
+                // Use a default image or placeholder
+                imageView = new ImageView(new Image(getClass().getResourceAsStream("/images/default_recipe.png")));
+                imageView.setFitWidth(100);
+                imageView.setFitHeight(100);
+            }
+        } catch (Exception e) {
+            // If there's an error loading the image, use a default or log the error
+            System.err.println("Error loading image for recipe: " + recipe.getName());
+            e.printStackTrace();
+            imageView = new ImageView(new Image(getClass().getResourceAsStream("/images/default_recipe.png")));
+            imageView.setFitWidth(100);
+            imageView.setFitHeight(100);
+        }
         
         Text proteins = new Text("Proteins: " + recipe.getProteins());
         Text carbs = new Text("Carbs: " + recipe.getCarbs());
@@ -83,18 +104,24 @@ public class NutritionFragmentController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/AddRecipeView.fxml"));
             Parent root = loader.load();
-
-            // Pass the clientId to the AddRecipeController
+            
             AddRecipeController controller = loader.getController();
-            controller.setClientId(this.clientId); // Assume this.clientId is set
-
+            controller.setClientId(this.clientId);
+            
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.setTitle("Add Recipes");
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
+            
+            // Refresh the view after adding recipes
+            loadRecipes();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    
+    public void refreshView() {
+        loadRecipes();
     }
 }

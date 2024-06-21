@@ -10,11 +10,9 @@ public class ClientModel implements Serializable {
   private String name;
   private List<RecipeModel> recipeModels;
   private List<ExerciseModel> exerciseModels;
-
-  // Default constructor
+  
   public ClientModel() {}
-
-  // Constructor with parameters
+  
   public ClientModel(int id, String name, List<RecipeModel> recipeModels, List<ExerciseModel> exerciseModels) {
     this.id = id;
     this.name = name;

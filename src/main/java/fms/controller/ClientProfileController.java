@@ -23,7 +23,7 @@ public class ClientProfileController {
     this.client = client;
     clientNameLabel.setText(client.getName());
     clientIdLabel.setText(String.valueOf(client.getId()));
-    showDashboardView(); // Load dashboard by default
+    showDashboardView();
   }
   
   @FXML
@@ -56,7 +56,6 @@ public class ClientProfileController {
       if (controller instanceof NutritionFragmentController) {
         ((NutritionFragmentController) controller).setClientId(client.getId());
       }
-      // Add similar conditions for other fragment controllers if needed
       
     } catch (IOException e) {
       e.printStackTrace();

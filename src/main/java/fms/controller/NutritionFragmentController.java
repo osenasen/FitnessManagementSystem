@@ -114,7 +114,6 @@ public class NutritionFragmentController {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
             
-            // Refresh the view after adding recipes
             loadRecipes();
         } catch (IOException e) {
             e.printStackTrace();

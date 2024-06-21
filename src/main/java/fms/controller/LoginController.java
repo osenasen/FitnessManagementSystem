@@ -45,6 +45,20 @@ public class LoginController {
     }
   }
 
+  @FXML
+  private void handleDelete() {
+    String username = usernameField.getText();
+    String password = passwordField.getText();
+
+    if (username.isEmpty() && password.isEmpty()) {
+      errorLabel.setText("Please fill the fields!");
+    } else {
+      usernameField.clear();
+      passwordField.clear();
+      errorLabel.setText("The input fields have been emptied!");
+    }
+  }
+
   private void openMainMenu() {
     try {
       FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/MainMenuView.fxml"));
@@ -58,4 +72,3 @@ public class LoginController {
     }
   }
 }
-

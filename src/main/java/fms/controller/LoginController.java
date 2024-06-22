@@ -35,6 +35,7 @@ public class LoginController {
     String password = passwordField.getText();
 
     if (username.equals(userModel.getUsername()) && password.equals(userModel.getPassword())) {
+
       userModel.setUsername(username);
 
       Stage stage = (Stage) usernameField.getScene().getWindow();
@@ -42,6 +43,20 @@ public class LoginController {
       openMainMenu();
     } else {
       errorLabel.setText("Invalid username or password.");
+    }
+  }
+
+  @FXML
+  private void handleDelete() {
+    String username = usernameField.getText();
+    String password = passwordField.getText();
+
+    if (username.isEmpty() && password.isEmpty()) {
+      errorLabel.setText("Please fill the fields!");
+    } else {
+      usernameField.clear();
+      passwordField.clear();
+      errorLabel.setText("The input fields have been emptied!");
     }
   }
 
@@ -58,4 +73,3 @@ public class LoginController {
     }
   }
 }
-

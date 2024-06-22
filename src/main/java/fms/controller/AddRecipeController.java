@@ -15,25 +15,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class AddRecipeController {
-
     @FXML
     private TableView<RecipeModel> recipeTableView;
-
     @FXML
     private TableColumn<RecipeModel, Boolean> selectColumn;
-
     @FXML
     private TableColumn<RecipeModel, String> nameColumn;
-
     @FXML
     private TableColumn<RecipeModel, Integer> proteinsColumn;
-
     @FXML
     private TableColumn<RecipeModel, Integer> carbsColumn;
-
     @FXML
     private TableColumn<RecipeModel, Integer> caloriesColumn;
-
     @FXML
     private TableColumn<RecipeModel, String> linkPlaceholderColumn;
 
@@ -49,11 +42,11 @@ public class AddRecipeController {
         selectColumn.setCellFactory(column -> new CheckBoxTableCell<>());
         selectColumn.setEditable(true);
 
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("Name"));
-        proteinsColumn.setCellValueFactory(new PropertyValueFactory<>("Proteins"));
-        carbsColumn.setCellValueFactory(new PropertyValueFactory<>("Carbs"));
-        caloriesColumn.setCellValueFactory(new PropertyValueFactory<>("Calories"));
-        linkPlaceholderColumn.setCellValueFactory(new PropertyValueFactory<>("LinkPlaceholder"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        proteinsColumn.setCellValueFactory(new PropertyValueFactory<>("proteins"));
+        carbsColumn.setCellValueFactory(new PropertyValueFactory<>("carbs"));
+        caloriesColumn.setCellValueFactory(new PropertyValueFactory<>("calories"));
+        linkPlaceholderColumn.setCellValueFactory(new PropertyValueFactory<>("linkPlaceholder"));
 
         recipeTableView.setEditable(true);
 
@@ -89,6 +82,7 @@ public class AddRecipeController {
             DataManager.saveClients(clients);
         }
 
+        // Close the Add Recipe window
         Stage stage = (Stage) recipeTableView.getScene().getWindow();
         stage.close();
     }

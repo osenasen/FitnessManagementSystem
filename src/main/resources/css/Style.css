@@ -1,0 +1,15 @@
+.toggle-button {
+    -fx-min-width: 80px;
+    -fx-min-height: 30px;
+    -fx-font-weight: bold;
+}
+
+.toggle-button:selected {
+    -fx-background-color: #90EE90;
+    -fx-text-fill: white;
+}
+
+.toggle-button:not(:selected) {
+    -fx-background-color: #FFB6C1;
+    -fx-text-fill: white;
+}

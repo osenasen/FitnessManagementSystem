@@ -19,6 +19,7 @@ import javafx.scene.Scene;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class NutritionFragmentController {
     
@@ -33,23 +34,30 @@ public class NutritionFragmentController {
         this.clientId = clientId;
         loadRecipes();
     }
-    
+
     private void loadRecipes() {
-        List<RecipeModel> clientRecipes = getClientRecipes();
+        List<Integer> clientRecipeIds = DataManager.getClientRecipeIds(clientId);
+        List<RecipeModel> allRecipes = DataManager.loadRecipes();
+
+        List<RecipeModel> clientRecipes = allRecipes.stream()
+                .filter(recipe -> clientRecipeIds.contains(recipe.getId()))
+                .collect(Collectors.toList());
+
+        displayRecipes(clientRecipes);
+    }
+
+    private void displayRecipes(List<RecipeModel> recipes) {
         gridPane.getChildren().clear();
-        if (clientRecipes != null && !clientRecipes.isEmpty()) {
-            int column = 0;
-            int row = 0;
-            
-            for (RecipeModel recipe : clientRecipes) {
-                VBox recipeBox = createRecipeBox(recipe);
-                gridPane.add(recipeBox, column, row);
-                
-                column++;
-                if (column == 3) {
-                    column = 0;
-                    row++;
-                }
+        int column = 0;
+        int row = 0;
+
+        for (RecipeModel recipe : recipes) {
+            VBox recipeBox = createRecipeBox(recipe);
+            gridPane.add(recipeBox, column, row);
+            column++;
+            if (column == 3) {
+                column = 0;
+                row++;
             }
         }
     }

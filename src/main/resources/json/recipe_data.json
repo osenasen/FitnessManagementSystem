@@ -16,5 +16,122 @@
     "carbs": 25,
     "calories": 350,
     "linkPlaceholder": "http://example.com/recipe2"
+  },
+  {
+    "id": 3,
+    "name": "Recipe 3",
+    "imagePath": "/images/EggMuffins.png",
+    "proteins": 8,
+    "carbs": 4,
+    "calories": 113,
+    "linkPlaceholder": "https://eatsmarter.de/rezepte/eier-muffins-mit-lachs-und-brokkoli"
+  },
+  {
+    "id": 4,
+    "name": "Recipe 4",
+    "imagePath": "/images/ThunfischTatar.png",
+    "proteins": 25,
+    "carbs": 13,
+    "calories": 340,
+    "linkPlaceholder": "https://eatsmarter.de/rezepte/thunfisch-tatar"
+  },
+  {
+    "id": 5,
+    "name": "Recipe 5",
+    "imagePath": "/images/JapaneseKürbisSuppe.png",
+    "proteins": 18,
+    "carbs": 12,
+    "calories":230,
+    "linkPlaceholder": "https://eatsmarter.de/rezepte/japanische-kuerbissuppe-0"
+  },
+  {
+    "id": 6,
+    "name": "Recipe 6",
+    "imagePath": "/images/SmoothieBowl.png",
+    "proteins": 9,
+    "carbs": 27,
+    "calories": 262,
+    "linkPlaceholder": "https://eatsmarter.de/rezepte/smoothie-bowl-mit-blaubeeren"
+  },
+  {
+    "id": 7,
+    "name": "Recipe 7",
+    "imagePath": "/images/AvocadoLachsBrot.png",
+    "proteins": 22,
+    "carbs": 27,
+    "calories": 400,
+    "linkPlaceholder": "https://eatsmarter.de/rezepte/vollkornbrot-mit-avocadofrischkaese-und-raeucherlachs-0"
+  },
+  {
+    "id": 8,
+    "name": "Recipe 8",
+    "imagePath": "/images/SauerkrautKumpir.png",
+    "proteins": 15,
+    "carbs": 65,
+    "calories": 505,
+    "linkPlaceholder": "https://eatsmarter.de/rezepte/sauerkraut-kumpir"
+  },
+  {
+    "id": 9,
+    "name": "Recipe 9",
+    "imagePath": "/images/VeganButterMasala.png",
+    "proteins": 16,
+    "carbs": 23,
+    "calories": 369,
+    "linkPlaceholder": "https://eatsmarter.de/rezepte/butter-masala-vegan"
+  },
+  {
+    "id": 10,
+    "name": "Recipe 10",
+    "imagePath": "/images/GefüllteOfenkartoffelVegetarisch.png",
+    "proteins": 15,
+    "carbs": 35,
+    "calories": 326,
+    "linkPlaceholder": "https://eatsmarter.de/rezepte/gefuellte-ofenkartoffeln-vegetarisch-0"
+  },
+  {
+    "id": 11,
+    "name": "Recipe 11",
+    "imagePath": "/images/GnocchiBasilikumpesto.png",
+    "proteins": 21,
+    "carbs": 73,
+    "calories": 677,
+    "linkPlaceholder": "https://eatsmarter.de/rezepte/gnocchi-mit-basilikumpesto"
+  },
+  {
+    "id": 12,
+    "name": "Recipe 12",
+    "imagePath": "/images/HähnchenKürbisBlech.png",
+    "proteins": 27,
+    "carbs": 9,
+    "calories": 387,
+    "linkPlaceholder": "https://eatsmarter.de/rezepte/haehnchen-mit-kuerbis-vom-blech"
+  },
+  {
+    "id": 13,
+    "name": "Recipe 13",
+    "imagePath": "/images/ZucchiniNudelnLachs.png",
+    "proteins": 34,
+    "carbs": 11,
+    "calories": 420,
+    "linkPlaceholder": "https://eatsmarter.de/rezepte/zucchininudeln-mit-lachs"
+  },
+  {
+    "id": 14,
+    "name": "Recipe 14",
+    "imagePath": "/images/KürbisLinsenSalatZiegenkäse.png",
+    "proteins": 18,
+    "carbs": 33,
+    "calories": 454,
+    "linkPlaceholder": "https://eatsmarter.de/rezepte/kuerbis-linsen-salat-mit-ziegenkaese"
+  },
+  {
+    "id": 15,
+    "name": "Recipe 15",
+    "imagePath": "/images/GemüsePolentaGratin.png",
+    "proteins": 17,
+    "carbs": 41,
+    "calories": 366,
+    "linkPlaceholder": "https://eatsmarter.de/rezepte/gemuese-polenta-gratin"
   }
 ]

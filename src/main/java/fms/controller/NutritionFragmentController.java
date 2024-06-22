@@ -24,6 +24,7 @@ public class NutritionFragmentController {
     
     @FXML
     private GridPane gridPane;
+
     @FXML
     private Button addRecipeButton;
     

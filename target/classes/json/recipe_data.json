@@ -19,7 +19,7 @@
   },
   {
     "id": 3,
-    "name": "Recipe 3",
+    "name": "Egg Muffins with Salmon and Brokkoli",
     "imagePath": "/images/EggMuffins.png",
     "proteins": 8,
     "carbs": 4,
@@ -28,7 +28,7 @@
   },
   {
     "id": 4,
-    "name": "Recipe 4",
+    "name": "Tuna Tatar",
     "imagePath": "/images/ThunfischTatar.png",
     "proteins": 25,
     "carbs": 13,
@@ -37,7 +37,7 @@
   },
   {
     "id": 5,
-    "name": "Recipe 5",
+    "name": "Japanese Pumpkin Soup",
     "imagePath": "/images/JapaneseKürbisSuppe.png",
     "proteins": 18,
     "carbs": 12,
@@ -46,7 +46,7 @@
   },
   {
     "id": 6,
-    "name": "Recipe 6",
+    "name": "Smoothie Bowl with Blueberry",
     "imagePath": "/images/SmoothieBowl.png",
     "proteins": 9,
     "carbs": 27,
@@ -55,7 +55,7 @@
   },
   {
     "id": 7,
-    "name": "Recipe 7",
+    "name": "Avocado Cream Cheese Lachs Bread",
     "imagePath": "/images/AvocadoLachsBrot.png",
     "proteins": 22,
     "carbs": 27,
@@ -64,7 +64,7 @@
   },
   {
     "id": 8,
-    "name": "Recipe 8",
+    "name": "Sauerkraut Kumpir",
     "imagePath": "/images/SauerkrautKumpir.png",
     "proteins": 15,
     "carbs": 65,
@@ -73,7 +73,7 @@
   },
   {
     "id": 9,
-    "name": "Recipe 9",
+    "name": "Vegan Butter Musala",
     "imagePath": "/images/VeganButterMasala.png",
     "proteins": 16,
     "carbs": 23,
@@ -82,7 +82,7 @@
   },
   {
     "id": 10,
-    "name": "Recipe 10",
+    "name": "Vegetarian Stuffed Baked Potato",
     "imagePath": "/images/GefüllteOfenkartoffelVegetarisch.png",
     "proteins": 15,
     "carbs": 35,
@@ -91,7 +91,7 @@
   },
   {
     "id": 11,
-    "name": "Recipe 11",
+    "name": "Gnocchi with Basil Pesto",
     "imagePath": "/images/GnocchiBasilikumpesto.png",
     "proteins": 21,
     "carbs": 73,
@@ -100,7 +100,7 @@
   },
   {
     "id": 12,
-    "name": "Recipe 12",
+    "name": "Chicken with Pumpkin from the Tray",
     "imagePath": "/images/HähnchenKürbisBlech.png",
     "proteins": 27,
     "carbs": 9,
@@ -109,7 +109,7 @@
   },
   {
     "id": 13,
-    "name": "Recipe 13",
+    "name": "Zucchini Noodles with Salmon",
     "imagePath": "/images/ZucchiniNudelnLachs.png",
     "proteins": 34,
     "carbs": 11,
@@ -118,7 +118,7 @@
   },
   {
     "id": 14,
-    "name": "Recipe 14",
+    "name": "Pumpkin Lentil Salad with Goat Cheese",
     "imagePath": "/images/KürbisLinsenSalatZiegenkäse.png",
     "proteins": 18,
     "carbs": 33,
@@ -127,7 +127,7 @@
   },
   {
     "id": 15,
-    "name": "Recipe 15",
+    "name": "Vegetable Polenta Gratin",
     "imagePath": "/images/GemüsePolentaGratin.png",
     "proteins": 17,
     "carbs": 41,

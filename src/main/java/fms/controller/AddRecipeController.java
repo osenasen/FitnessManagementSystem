@@ -37,7 +37,7 @@ public class AddRecipeController {
 
     @FXML
     public void initialize() {
-        String css = this.getClass().getResource("/css/Style.css").toExternalForm();
+        String css = this.getClass().getResource("/css/styles.css").toExternalForm();
         recipeTableView.getStylesheets().add(css);
 
         setupTableColumns();

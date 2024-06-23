@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.geometry.Insets?>
+
+<VBox fx:id="recipeBox" spacing="5" alignment="CENTER" stylesheets="/css/styles.css" styleClass="recipe-box"
+      xmlns:fx="http://javafx.com/fxml" fx:controller="fms.controller.RecipeBoxController">
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
+    <Label fx:id="nameLabel" wrapText="true" styleClass="recipe-name"/>
+    <ImageView fx:id="recipeImage" fitWidth="180" fitHeight="180" preserveRatio="true"/>
+    <Label fx:id="proteinsLabel"/>
+    <Label fx:id="carbsLabel"/>
+    <Label fx:id="caloriesLabel"/>
+    <Hyperlink fx:id="recipeLink" text="Recipe Link"/>
+    <Region VBox.vgrow="ALWAYS"/> <!-- This pushes the content to the top -->
+</VBox>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.Label?>
-
-<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="fms.controller.ExerciseController">
-    <children>
-        <Label fx:id="exerciseLabel" layoutX="10" layoutY="10" text="Exercise Info"/>
-    </children>
-</AnchorPane>
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="fms.controller.ExerciseController" spacing="10" padding="10">
+    <Label text="Exercise View"/>
+</VBox>

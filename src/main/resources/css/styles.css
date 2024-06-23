@@ -1,0 +1,26 @@
+.toggle-button {
+    -fx-min-width: 80px;
+    -fx-min-height: 30px;
+    -fx-font-weight: bold;
+}
+
+.toggle-button:selected {
+    -fx-background-color: #90EE90;
+    -fx-text-fill: white;
+}
+
+.toggle-button:not(:selected) {
+    -fx-background-color: #FFB6C1;
+    -fx-text-fill: white;
+}
+.recipe-box {
+    -fx-background-color: #f0f0f0;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+}
+
+.recipe-name {
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}

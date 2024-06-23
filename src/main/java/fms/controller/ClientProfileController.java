@@ -45,18 +45,19 @@ public class ClientProfileController {
   private void showExerciseView() {
     loadFragment("/view/ExerciseFragment.fxml");
   }
-  
+
   private void loadFragment(String fragmentPath) {
     try {
       FXMLLoader loader = new FXMLLoader(getClass().getResource(fragmentPath));
       Parent fragment = loader.load();
       clientProfilePane.setCenter(fragment);
-      
+
       Object controller = loader.getController();
       if (controller instanceof NutritionFragmentController) {
         ((NutritionFragmentController) controller).setClientId(client.getId());
       }
-      
+      // ... handle other fragment types
+
     } catch (IOException e) {
       e.printStackTrace();
     }

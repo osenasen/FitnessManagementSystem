@@ -80,4 +80,24 @@ public class DataManager {
             e.printStackTrace();
         }
     }
+    public static List<Integer> getClientRecipeIds(int clientId) {
+        List<ClientModel> clients = loadClients();
+        ClientModel client = clients.stream()
+                .filter(c -> c.getId() == clientId)
+                .findFirst()
+                .orElse(null);
+        return client != null && client.getRecipeIds() != null ? client.getRecipeIds() : new ArrayList<>();
+    }
+
+    public static void updateClientRecipes(int clientId, List<Integer> recipeIds) {
+        List<ClientModel> clients = loadClients();
+        ClientModel client = clients.stream()
+                .filter(c -> c.getId() == clientId)
+                .findFirst()
+                .orElse(null);
+        if (client != null) {
+            client.setRecipeIds(recipeIds);
+            saveClients(clients);
+        }
+    }
 }

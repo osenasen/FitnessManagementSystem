@@ -17,11 +17,17 @@ import java.net.URISyntaxException;
 public class RecipeBoxController {
 
     @FXML private VBox recipeBox;
+
     @FXML private Label nameLabel;
+
     @FXML private ImageView recipeImage;
+
     @FXML private Label proteinsLabel;
+
     @FXML private Label carbsLabel;
+
     @FXML private Label caloriesLabel;
+
     @FXML private Hyperlink recipeLink;
 
     public void setRecipe(RecipeModel recipe) {

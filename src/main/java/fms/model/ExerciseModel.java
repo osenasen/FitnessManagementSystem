@@ -10,7 +10,6 @@ public class ExerciseModel implements Serializable {
   private String description;
   private int duration;
 
-
   public ExerciseModel() {}
   
   public ExerciseModel(int id, String name, String description, int duration) {

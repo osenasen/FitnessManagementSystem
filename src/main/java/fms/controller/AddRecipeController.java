@@ -1,11 +1,13 @@
 package fms.controller;
 
 import fms.model.RecipeModel;
+import fms.model.ClientModel;
 import fms.util.DataManager;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
@@ -13,25 +15,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class AddRecipeController {
-
     @FXML
     private TableView<RecipeModel> recipeTableView;
-
     @FXML
     private TableColumn<RecipeModel, Boolean> selectColumn;
-
     @FXML
     private TableColumn<RecipeModel, String> nameColumn;
-
     @FXML
     private TableColumn<RecipeModel, Integer> proteinsColumn;
-
     @FXML
     private TableColumn<RecipeModel, Integer> carbsColumn;
-
     @FXML
     private TableColumn<RecipeModel, Integer> caloriesColumn;
-
     @FXML
     private TableColumn<RecipeModel, String> linkPlaceholderColumn;
 
@@ -39,21 +34,12 @@ public class AddRecipeController {
 
     public void setClientId(int clientId) {
         this.clientId = clientId;
-        loadRecipes();
     }
 
     @FXML
     public void initialize() {
-        String css = this.getClass().getResource("/css/styles.css").toExternalForm();
-        recipeTableView.getStylesheets().add(css);
-
-        setupTableColumns();
-        recipeTableView.setEditable(true);
-    }
-
-    private void setupTableColumns() {
         selectColumn.setCellValueFactory(cellData -> cellData.getValue().selectedProperty());
-        selectColumn.setCellFactory(column -> new ToggleButtonTableCell<>());
+        selectColumn.setCellFactory(column -> new CheckBoxTableCell<>());
         selectColumn.setEditable(true);
 
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -61,29 +47,44 @@ public class AddRecipeController {
         carbsColumn.setCellValueFactory(new PropertyValueFactory<>("carbs"));
         caloriesColumn.setCellValueFactory(new PropertyValueFactory<>("calories"));
         linkPlaceholderColumn.setCellValueFactory(new PropertyValueFactory<>("linkPlaceholder"));
+
+        recipeTableView.setEditable(true);
+
+        loadRecipes();
     }
 
     private void loadRecipes() {
-        List<RecipeModel> allRecipes = DataManager.loadRecipes();
-        List<Integer> clientRecipeIds = DataManager.getClientRecipeIds(clientId);
+        List<RecipeModel> recipes = DataManager.loadRecipes();
+        List<RecipeModel> clientRecipes = getClientRecipes();
 
-        for (RecipeModel recipe : allRecipes) {
-            recipe.setSelected(clientRecipeIds.contains(recipe.getId()));
+        for (RecipeModel recipe : recipes) {
+            recipe.setSelected(clientRecipes.stream().anyMatch(r -> r.getId() == recipe.getId()));
         }
+        recipeTableView.setItems(FXCollections.observableArrayList(recipes));
+    }
 
-        recipeTableView.setItems(FXCollections.observableArrayList(allRecipes));
+    private List<RecipeModel> getClientRecipes() {
+        List<ClientModel> clients = DataManager.loadClients();
+        ClientModel client = clients.stream().filter(c -> c.getId() == clientId).findFirst().orElse(null);
+        return client != null ? client.getRecipes() : List.of();
     }
 
     @FXML
     private void handleAddRecipes() {
-        List<Integer> selectedRecipeIds = recipeTableView.getItems().stream()
+        List<RecipeModel> selectedRecipes = recipeTableView.getItems().stream()
                 .filter(RecipeModel::isSelected)
-                .map(RecipeModel::getId)
                 .collect(Collectors.toList());
 
-        DataManager.updateClientRecipes(clientId, selectedRecipeIds);
+        List<ClientModel> clients = DataManager.loadClients();
+        ClientModel client = clients.stream().filter(c -> c.getId() == clientId).findFirst().orElse(null);
+        if (client != null) {
+            client.setRecipes(selectedRecipes);
+            DataManager.saveClients(clients);
+        }
 
+        // Close the Add Recipe window
         Stage stage = (Stage) recipeTableView.getScene().getWindow();
         stage.close();
     }
 }
+

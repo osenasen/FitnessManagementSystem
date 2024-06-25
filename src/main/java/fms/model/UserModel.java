@@ -8,9 +8,11 @@ public class UserModel implements Serializable {
   private int id;
   private String username;
   private String password;
-  
+
+  // Default constructor
   public UserModel() {}
-  
+
+  // Constructor with parameters
   public UserModel(String username, String password) {
     this.username = username;
     this.password = password;

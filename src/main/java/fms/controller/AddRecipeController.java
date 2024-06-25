@@ -70,12 +70,12 @@ public class AddRecipeController {
     @FXML
     private void handleAddRecipes() {
         List<Integer> selectedRecipeIds = recipeTableView.getItems().stream()
-                .filter(RecipeModel::isSelected)
-                .map(RecipeModel::getId)
-                .collect(Collectors.toList());
-
+                                              .filter(RecipeModel::isSelected)
+                                              .map(RecipeModel::getId)
+                                              .collect(Collectors.toList());
+        
         DataManager.updateClientRecipes(clientId, selectedRecipeIds);
-
+        
         Stage stage = (Stage) recipeTableView.getScene().getWindow();
         stage.close();
     }

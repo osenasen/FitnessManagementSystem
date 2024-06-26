@@ -10,7 +10,7 @@ public class ClientModel implements Serializable {
   private String name;
   private List<RecipeModel> recipeModels;
   private List<ExerciseModel> exerciseModels;
-  
+  private List<Integer> recipeIds;
   public ClientModel() {}
   
   public ClientModel(int id, String name, List<RecipeModel> recipeModels, List<ExerciseModel> exerciseModels) {
@@ -50,5 +50,13 @@ public class ClientModel implements Serializable {
 
   public void setExercises(List<ExerciseModel> exerciseModels) {
     this.exerciseModels = exerciseModels;
+  }
+
+  public List<Integer> getRecipeIds() {
+    return recipeIds;
+  }
+
+  public void setRecipeIds(List<Integer> recipeIds) {
+    this.recipeIds = recipeIds;
   }
 }

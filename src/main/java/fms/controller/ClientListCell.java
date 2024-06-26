@@ -1,7 +1,10 @@
 package fms.controller;
 
+import fms.model.RecipeModel;
 import javafx.scene.control.ListCell;
 import fms.model.ClientModel;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.ToggleButton;
 
 public class ClientListCell extends ListCell<ClientModel> {
   @Override

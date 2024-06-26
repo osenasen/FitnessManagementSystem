@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import java.util.List;
 
 public class AddClientController {
+
     @FXML
     private TextField firstNameField;
 
@@ -40,5 +41,3 @@ public class AddClientController {
         stage.close();
     }
 }
-
-

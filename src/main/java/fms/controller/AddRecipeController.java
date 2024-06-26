@@ -81,7 +81,8 @@ public class AddRecipeController {
             client.setRecipes(selectedRecipes);
             DataManager.saveClients(clients);
         }
-        
+
+        // Close the Add Recipe window
         Stage stage = (Stage) recipeTableView.getScene().getWindow();
         stage.close();
     }

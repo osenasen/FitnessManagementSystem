@@ -1,6 +1,6 @@
 [ {
   "id" : 1,
   "name" : "Amelie Hu",
-  "recipeIds" : [ ],
+  "recipeIds" : [ 1, 2 ],
   "exerciseIds" : [ ]
 } ]

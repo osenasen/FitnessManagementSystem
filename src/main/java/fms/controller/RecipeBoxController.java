@@ -15,7 +15,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 public class RecipeBoxController {
-
+    
     @FXML private VBox recipeBox;
     @FXML private Label nameLabel;
     @FXML private ImageView recipeImage;
@@ -23,25 +23,25 @@ public class RecipeBoxController {
     @FXML private Label carbsLabel;
     @FXML private Label caloriesLabel;
     @FXML private Hyperlink recipeLink;
-
+    
     public void setRecipe(RecipeModel recipe) {
         nameLabel.setText(recipe.getName());
-        proteinsLabel.setText("Proteins: " + recipe.getProteins());
-        carbsLabel.setText("Carbs: " + recipe.getCarbs());
-        caloriesLabel.setText("Calories: " + recipe.getCalories());
-
+        proteinsLabel.setText(String.valueOf(recipe.getProteins()));
+        carbsLabel.setText(String.valueOf(recipe.getCarbs()));
+        caloriesLabel.setText(String.valueOf(recipe.getCalories()));
+        
         Image image = new Image(getClass().getResourceAsStream(recipe.getImagePath()));
         recipeImage.setImage(image);
-
-        // Create a clip to cut off the image
+        
+        // Create a clip to round all corners of the image
         Rectangle clip = new Rectangle(recipeImage.getFitWidth(), recipeImage.getFitHeight());
-        clip.setArcWidth(10);
-        clip.setArcHeight(10);
+        clip.setArcWidth(20);
+        clip.setArcHeight(20);
         recipeImage.setClip(clip);
-
+        
         recipeLink.setOnAction(e -> openLink(recipe.getLinkPlaceholder()));
     }
-
+    
     private void openLink(String url) {
         try {
             Desktop.getDesktop().browse(new URI(url));

@@ -34,10 +34,19 @@ public class RecipeBoxController {
         recipeImage.setImage(image);
         
         // Create a clip to round all corners of the image
-        Rectangle clip = new Rectangle(recipeImage.getFitWidth(), recipeImage.getFitHeight());
+        Rectangle clip = new Rectangle(
+            recipeImage.getFitWidth(),
+            recipeImage.getFitHeight()
+        );
         clip.setArcWidth(20);
         clip.setArcHeight(20);
         recipeImage.setClip(clip);
+        
+        // Ensure the clip resizes with the image
+        recipeImage.fitWidthProperty().addListener((obs, oldVal, newVal) ->
+                                                       clip.setWidth(newVal.doubleValue()));
+        recipeImage.fitHeightProperty().addListener((obs, oldVal, newVal) ->
+                                                        clip.setHeight(newVal.doubleValue()));
         
         recipeLink.setOnAction(e -> openLink(recipe.getLinkPlaceholder()));
     }

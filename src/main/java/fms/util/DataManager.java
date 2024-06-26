@@ -1,5 +1,6 @@
 package fms.util;
 
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
 import fms.model.*;
@@ -15,12 +16,17 @@ public class DataManager {
     private static final String RECIPE_FILE = "src/main/resources/json/recipe_data.json";
     private static final String EXERCISE_FILE = "src/main/resources/json/exercise_data.json";
 
-    private static ObjectMapper mapper = new ObjectMapper();
+    private static final ObjectMapper mapper = new ObjectMapper();
+
+    static {
+        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+    }
 
     public static UserModel loadUser() {
         try {
             return mapper.readValue(new File(USER_FILE), UserModel.class);
         } catch (IOException e) {
+            e.printStackTrace();
             return new UserModel("defaultUser", "password");
         }
     }
@@ -37,6 +43,7 @@ public class DataManager {
         try {
             return mapper.readValue(new File(CLIENT_FILE), new TypeReference<List<ClientModel>>() {});
         } catch (IOException e) {
+            e.printStackTrace();
             return new ArrayList<>();
         }
     }
@@ -53,6 +60,7 @@ public class DataManager {
         try {
             return mapper.readValue(new File(RECIPE_FILE), new TypeReference<List<RecipeModel>>() {});
         } catch (IOException e) {
+            e.printStackTrace();
             return new ArrayList<>();
         }
     }
@@ -69,6 +77,7 @@ public class DataManager {
         try {
             return mapper.readValue(new File(EXERCISE_FILE), new TypeReference<List<ExerciseModel>>() {});
         } catch (IOException e) {
+            e.printStackTrace();
             return new ArrayList<>();
         }
     }
@@ -80,24 +89,24 @@ public class DataManager {
             e.printStackTrace();
         }
     }
+
     public static List<Integer> getClientRecipeIds(int clientId) {
         List<ClientModel> clients = loadClients();
-        ClientModel client = clients.stream()
+        return clients.stream()
                 .filter(c -> c.getId() == clientId)
                 .findFirst()
-                .orElse(null);
-        return client != null && client.getRecipeIds() != null ? client.getRecipeIds() : new ArrayList<>();
+                .map(ClientModel::getRecipeIds)
+                .orElse(new ArrayList<>());
     }
 
     public static void updateClientRecipes(int clientId, List<Integer> recipeIds) {
         List<ClientModel> clients = loadClients();
-        ClientModel client = clients.stream()
+        clients.stream()
                 .filter(c -> c.getId() == clientId)
                 .findFirst()
-                .orElse(null);
-        if (client != null) {
-            client.setRecipeIds(recipeIds);
-            saveClients(clients);
-        }
+                .ifPresent(client -> {
+                    client.setRecipeIds(recipeIds);
+                    saveClients(clients);
+                });
     }
 }

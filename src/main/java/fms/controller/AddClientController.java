@@ -7,6 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.util.List;
+import java.util.ArrayList;
 
 public class AddClientController {
 
@@ -18,16 +19,21 @@ public class AddClientController {
 
     @FXML
     private void handleAddClient() {
-        String firstName = firstNameField.getText();
-        String lastName = lastNameField.getText();
+        String firstName = firstNameField.getText().trim();
+        String lastName = lastNameField.getText().trim();
 
         if (firstName.isEmpty() || lastName.isEmpty()) {
+            // You might want to show an error message to the user here
             return;
         }
 
         List<ClientModel> clients = DataManager.loadClients();
-        int newId = clients.isEmpty() ? 1 : clients.get(clients.size() - 1).getId() + 1;
-        ClientModel newClient = new ClientModel(newId, firstName + " " + lastName, null, null);
+        int newId = clients.isEmpty() ? 1 : clients.stream().mapToInt(ClientModel::getId).max().orElse(0) + 1;
+
+        ClientModel newClient = new ClientModel(newId, firstName + " " + lastName);
+        newClient.setRecipeIds(new ArrayList<>());
+        newClient.setExerciseIds(new ArrayList<>());
+
         clients.add(newClient);
         DataManager.saveClients(clients);
 

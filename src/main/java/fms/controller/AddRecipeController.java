@@ -14,29 +14,49 @@ import javafx.stage.Stage;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Controller-Klasse zum Hinzufügen von Rezepten zu einem Client.
+ * Diese Klasse behandelt die Anzeige und Auswahl von Rezepten über eine JavaFX-Benutzeroberfläche.
+ */
 public class AddRecipeController {
+
     @FXML
     private TableView<RecipeModel> recipeTableView;
+
     @FXML
     private TableColumn<RecipeModel, Boolean> selectColumn;
+
     @FXML
     private TableColumn<RecipeModel, String> nameColumn;
+
     @FXML
     private TableColumn<RecipeModel, Integer> proteinsColumn;
+
     @FXML
     private TableColumn<RecipeModel, Integer> carbsColumn;
+
     @FXML
     private TableColumn<RecipeModel, Integer> caloriesColumn;
+
     @FXML
     private TableColumn<RecipeModel, String> linkPlaceholderColumn;
 
     private int clientId;
 
+    /**
+     * Setzt die Client-ID und lädt die zugehörigen Rezepte.
+     *
+     * @param clientId Die ID des Clients, zu dem Rezepte hinzugefügt werden sollen.
+     */
     public void setClientId(int clientId) {
         this.clientId = clientId;
         loadRecipes();
     }
 
+    /**
+     * Initialisiert die Controller-Klasse.
+     * Diese Methode wird automatisch aufgerufen, nachdem die FXML-Datei geladen wurde.
+     */
     @FXML
     public void initialize() {
         String css = this.getClass().getResource("/css/styles.css").toExternalForm();
@@ -45,13 +65,17 @@ public class AddRecipeController {
         setupTableColumns();
         recipeTableView.setEditable(true);
     }
-    
+
+    /**
+     * Konfiguriert die Tabellenspalten.
+     * Diese Methode richtet die Zellfabriken und Wertfabriken für die Tabellenspalten ein.
+     */
     private void setupTableColumns() {
-        // Setup for select column
+        // Einrichtung für die Auswahlspalte
         selectColumn.setCellValueFactory(cellData -> cellData.getValue().selectedProperty());
         selectColumn.setCellFactory(column -> new TableCell<RecipeModel, Boolean>() {
             private final ToggleButton toggleButton = new ToggleButton();
-            
+
             {
                 toggleButton.getStyleClass().add("recipe-toggle");
                 toggleButton.setOnAction(event -> {
@@ -59,7 +83,7 @@ public class AddRecipeController {
                     recipe.setSelected(toggleButton.isSelected());
                 });
             }
-            
+
             @Override
             protected void updateItem(Boolean item, boolean empty) {
                 super.updateItem(item, empty);
@@ -71,15 +95,15 @@ public class AddRecipeController {
                 }
             }
         });
-        
-        // Setup for other columns
+
+        // Einrichtung für die anderen Spalten
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         proteinsColumn.setCellValueFactory(new PropertyValueFactory<>("proteins"));
         carbsColumn.setCellValueFactory(new PropertyValueFactory<>("carbs"));
         caloriesColumn.setCellValueFactory(new PropertyValueFactory<>("calories"));
         linkPlaceholderColumn.setCellValueFactory(new PropertyValueFactory<>("linkPlaceholder"));
-        
-        // Optionally, add cell factories for better formatting
+
+        // Optionale Zellfabriken für bessere Formatierung
         proteinsColumn.setCellFactory(column -> new TableCell<RecipeModel, Integer>() {
             @Override
             protected void updateItem(Integer item, boolean empty) {
@@ -91,7 +115,7 @@ public class AddRecipeController {
                 }
             }
         });
-        
+
         carbsColumn.setCellFactory(column -> new TableCell<RecipeModel, Integer>() {
             @Override
             protected void updateItem(Integer item, boolean empty) {
@@ -103,7 +127,7 @@ public class AddRecipeController {
                 }
             }
         });
-        
+
         caloriesColumn.setCellFactory(column -> new TableCell<RecipeModel, Integer>() {
             @Override
             protected void updateItem(Integer item, boolean empty) {
@@ -115,7 +139,7 @@ public class AddRecipeController {
                 }
             }
         });
-        
+
         linkPlaceholderColumn.setCellFactory(column -> new TableCell<RecipeModel, String>() {
             @Override
             protected void updateItem(String item, boolean empty) {
@@ -131,6 +155,9 @@ public class AddRecipeController {
         });
     }
 
+    /**
+     * Lädt die Rezepte und markiert diejenigen, die dem aktuellen Client zugeordnet sind.
+     */
     private void loadRecipes() {
         List<RecipeModel> allRecipes = DataManager.loadRecipes();
         List<Integer> clientRecipeIds = DataManager.getClientRecipeIds(clientId);
@@ -142,15 +169,19 @@ public class AddRecipeController {
         recipeTableView.setItems(FXCollections.observableArrayList(allRecipes));
     }
 
+    /**
+     * Behandelt die Aktion des Hinzufügens ausgewählter Rezepte zum Client.
+     * Diese Methode sammelt die ausgewählten Rezepte und aktualisiert die Zuordnungen im DataManager.
+     */
     @FXML
     private void handleAddRecipes() {
         List<Integer> selectedRecipeIds = recipeTableView.getItems().stream()
-                                              .filter(RecipeModel::isSelected)
-                                              .map(RecipeModel::getId)
-                                              .collect(Collectors.toList());
-        
+                .filter(RecipeModel::isSelected)
+                .map(RecipeModel::getId)
+                .collect(Collectors.toList());
+
         DataManager.updateClientRecipes(clientId, selectedRecipeIds);
-        
+
         Stage stage = (Stage) recipeTableView.getScene().getWindow();
         stage.close();
     }

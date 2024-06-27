@@ -1,4 +1,5 @@
 package fms.controller;
+
 import fms.model.RecipeModel;
 import fms.util.DataManager;
 import javafx.fxml.FXML;
@@ -13,22 +14,38 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Controller-Klasse für das Ernährungs-Fragment.
+ * Diese Klasse verwaltet die Anzeige von Rezepten für einen bestimmten Client.
+ */
 public class NutritionFragmentController {
     @FXML
     private GridPane gridPane;
 
     private int clientId;
 
+    /**
+     * Initialisiert die Controller-Klasse.
+     * Diese Methode wird automatisch nach dem Laden der FXML-Datei aufgerufen.
+     */
     @FXML
     public void initialize() {
-        // Any other initializations you need
+        // Weitere Initialisierungen hier
     }
 
+    /**
+     * Setzt die Client-ID und lädt die zugehörigen Rezepte.
+     *
+     * @param clientId Die ID des Clients, dessen Rezepte geladen werden sollen.
+     */
     public void setClientId(int clientId) {
         this.clientId = clientId;
         loadRecipes();
     }
 
+    /**
+     * Lädt die Rezepte für den aktuellen Client und zeigt sie an.
+     */
     private void loadRecipes() {
         List<Integer> clientRecipeIds = DataManager.getClientRecipeIds(clientId);
         List<RecipeModel> allRecipes = DataManager.loadRecipes();
@@ -40,6 +57,11 @@ public class NutritionFragmentController {
         displayRecipes(clientRecipes);
     }
 
+    /**
+     * Zeigt die übergebenen Rezepte in der GridPane an.
+     *
+     * @param recipes Die Liste der Rezepte, die angezeigt werden sollen.
+     */
     private void displayRecipes(List<RecipeModel> recipes) {
         gridPane.getChildren().clear();
         int column = 0;
@@ -60,32 +82,40 @@ public class NutritionFragmentController {
                 }
             } catch (IOException e) {
                 e.printStackTrace();
-                // Handle the error (e.g., show an alert to the user)
+                // Fehler behandeln (z.B. Benutzer benachrichtigen)
             }
         }
     }
 
+    /**
+     * Behandelt das Öffnen der Ansicht zum Hinzufügen neuer Rezepte.
+     * Öffnet ein Modalfenster zum Hinzufügen von Rezepten und aktualisiert die Ansicht danach.
+     */
     @FXML
     public void handleOpenAddRecipeView() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/AddRecipeView.fxml"));
             Parent root = loader.load();
-            
+
             AddRecipeController controller = loader.getController();
             controller.setClientId(this.clientId);
-            
+
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
-            stage.setTitle("Add Recipes");
+            stage.setTitle("Rezepte hinzufügen");
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
-            
+
             loadRecipes();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    
+
+    /**
+     * Aktualisiert die Ansicht durch erneutes Laden der Rezepte.
+     * Diese Methode kann aufgerufen werden, um die Ansicht manuell zu aktualisieren.
+     */
     public void refreshView() {
         loadRecipes();
     }

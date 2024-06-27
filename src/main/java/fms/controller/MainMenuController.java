@@ -17,6 +17,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+/**
+ * Controller-Klasse für das Hauptmenü.
+ * Diese Klasse behandelt die Navigation und Aktionen innerhalb der Hauptmenü-Ansicht.
+ */
 public class MainMenuController {
 
   @FXML
@@ -28,13 +32,24 @@ public class MainMenuController {
   private ObservableList<ClientModel> clients = FXCollections.observableArrayList();
   private UserModel userModel;
 
+  /**
+   * Initialisiert die Controller-Klasse.
+   * Diese Methode wird automatisch aufgerufen, nachdem die FXML-Datei geladen wurde.
+   * Sie lädt den aktuellen Benutzer und initialisiert die Liste der Clients.
+   */
   public void initialize() {
     userModel = DataManager.loadUser();
-    usernameLabel.setText("Welcome, " + userModel.getUsername());
+    usernameLabel.setText("Willkommen, " + userModel.getUsername());
 
     loadClients();
   }
 
+  /**
+   * Behandelt die Auswahl eines Clients in der Liste.
+   * Wenn ein Client doppelt angeklickt wird, wird das Client-Profil geladen.
+   *
+   * @param event Das MouseEvent, das ausgelöst wurde.
+   */
   @FXML
   public void handleClientSelection(MouseEvent event) {
     if (event.getClickCount() == 2) {
@@ -45,13 +60,17 @@ public class MainMenuController {
     }
   }
 
+  /**
+   * Behandelt den Klick auf die "Passwort ändern" Schaltfläche.
+   * Öffnet ein Modalfenster zum Ändern des Passworts.
+   */
   @FXML
   private void handleChangePassword() {
     try {
       FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/ChangePasswordView.fxml"));
       Parent root = fxmlLoader.load();
       Stage stage = new Stage();
-      stage.setTitle("Change Password");
+      stage.setTitle("Passwort ändern");
       stage.setScene(new Scene(root));
       stage.initModality(Modality.APPLICATION_MODAL);
       stage.showAndWait();
@@ -60,17 +79,21 @@ public class MainMenuController {
     }
   }
 
+  /**
+   * Behandelt den Klick auf die "Abmelden" Schaltfläche.
+   * Öffnet die Login-Ansicht und schließt das aktuelle Hauptmenü-Fenster.
+   */
   @FXML
   private void handleLogout() {
     try {
       FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/LoginView.fxml"));
       Parent root = fxmlLoader.load();
       Stage stage = new Stage();
-      stage.setTitle("Login");
+      stage.setTitle("Anmelden");
       stage.setScene(new Scene(root));
       stage.show();
 
-      // Close the current main menu window
+      // Schließt das aktuelle Hauptmenü-Fenster
       Stage currentStage = (Stage) usernameLabel.getScene().getWindow();
       currentStage.close();
     } catch (Exception e) {
@@ -78,13 +101,18 @@ public class MainMenuController {
     }
   }
 
+  /**
+   * Behandelt den Klick auf die "Client hinzufügen" Schaltfläche.
+   * Öffnet ein Modalfenster zum Hinzufügen eines neuen Clients.
+   * Aktualisiert die Liste der Clients nach dem Hinzufügen.
+   */
   @FXML
   private void handleAddClient() {
     try {
       FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/AddClientView.fxml"));
       Parent root = fxmlLoader.load();
       Stage stage = new Stage();
-      stage.setTitle("Add Client");
+      stage.setTitle("Client hinzufügen");
       stage.setScene(new Scene(root));
       stage.initModality(Modality.APPLICATION_MODAL);
       stage.showAndWait();
@@ -95,11 +123,16 @@ public class MainMenuController {
     }
   }
 
+  /**
+   * Behandelt den Klick auf die "Client entfernen" Schaltfläche.
+   * Zeigt eine Bestätigungsdialog an und entfernt den ausgewählten Client aus der Liste.
+   * Speichert die aktualisierte Liste der Clients im DataManager.
+   */
   @FXML
   private void handleRemoveClient() {
     ClientModel selectedClient = clientListView.getSelectionModel().getSelectedItem();
     if (selectedClient != null) {
-      Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this client?", ButtonType.YES, ButtonType.NO);
+      Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Möchten Sie diesen Client wirklich löschen?", ButtonType.YES, ButtonType.NO);
       alert.showAndWait().ifPresent(response -> {
         if (response == ButtonType.YES) {
           clients.remove(selectedClient);
@@ -109,12 +142,22 @@ public class MainMenuController {
     }
   }
 
+  /**
+   * Lädt die Liste der Clients aus dem DataManager und zeigt sie in der ListView an.
+   * Verwendet die ClientListCell zur Darstellung der Client-Daten.
+   */
   private void loadClients() {
     clients.setAll(DataManager.loadClients());
     clientListView.setItems(clients);
     clientListView.setCellFactory(param -> new ClientListCell());
   }
 
+  /**
+   * Öffnet das Client-Profil für den ausgewählten Client.
+   * Lädt die ClientProfileView und übergibt das ClientModel an den Controller.
+   *
+   * @param client Das ClientModel des ausgewählten Clients.
+   */
   private void loadClientProfile(ClientModel client) {
     try {
       FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/ClientProfileView.fxml"));
@@ -123,7 +166,7 @@ public class MainMenuController {
       controller.setClient(client);
 
       Stage stage = new Stage();
-      stage.setTitle("Client Profile");
+      stage.setTitle("Client Profil");
       stage.setScene(new Scene(root));
       stage.show();
     } catch (Exception e) {

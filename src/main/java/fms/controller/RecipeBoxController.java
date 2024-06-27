@@ -14,8 +14,11 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+/**
+ * Controller-Klasse für das Anzeigen eines einzelnen Rezeptes in einem RecipeBox.
+ */
 public class RecipeBoxController {
-    
+
     @FXML private VBox recipeBox;
 
     @FXML private Label nameLabel;
@@ -29,31 +32,41 @@ public class RecipeBoxController {
     @FXML private Label caloriesLabel;
 
     @FXML private Hyperlink recipeLink;
-    
+
+    /**
+     * Setzt die Informationen des übergebenen Rezeptmodells in die Oberflächenelemente der RecipeBox.
+     *
+     * @param recipe Das Rezeptmodell, dessen Daten angezeigt werden sollen.
+     */
     public void setRecipe(RecipeModel recipe) {
         nameLabel.setText(recipe.getName());
         proteinsLabel.setText(String.valueOf(recipe.getProteins()));
         carbsLabel.setText(String.valueOf(recipe.getCarbs()));
         caloriesLabel.setText(String.valueOf(recipe.getCalories()));
-        
+
         Image image = new Image(getClass().getResourceAsStream(recipe.getImagePath()));
         recipeImage.setImage(image);
-        
-        // Create a clip to round all corners of the image
+
+        // Erstellt einen Ausschnitt, um alle Ecken des Bildes abzurunden
         Rectangle clip = new Rectangle(recipeImage.getFitWidth(), recipeImage.getFitHeight());
         clip.setArcWidth(20);
         clip.setArcHeight(20);
         recipeImage.setClip(clip);
-        
+
         recipeLink.setOnAction(e -> openLink(recipe.getLinkPlaceholder()));
     }
-    
+
+    /**
+     * Öffnet den angegebenen Link in einem Webbrowser.
+     *
+     * @param url Die URL des Links, der geöffnet werden soll.
+     */
     private void openLink(String url) {
         try {
             Desktop.getDesktop().browse(new URI(url));
         } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
-            // Handle the error (e.g., show an alert to the user)
+            // Fehler behandeln (z.B. Benutzer benachrichtigen)
         }
     }
 }

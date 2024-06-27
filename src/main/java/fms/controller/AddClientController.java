@@ -9,6 +9,10 @@ import javafx.stage.Stage;
 import java.util.List;
 import java.util.ArrayList;
 
+/**
+ * Controller-Klasse zum Hinzufügen eines neuen Clients.
+ * Diese Klasse behandelt die Eingaben und Aktionen zum Hinzufügen eines Clients über eine JavaFX-Benutzeroberfläche.
+ */
 public class AddClientController {
 
     @FXML
@@ -17,13 +21,19 @@ public class AddClientController {
     @FXML
     private TextField lastNameField;
 
+    /**
+     * Behandelt die Aktion des Hinzufügens eines neuen Clients.
+     * Diese Methode holt die Eingaben aus den Textfeldern, validiert sie,
+     * erstellt ein neues ClientModel-Objekt und speichert es mit dem DataManager.
+     * Wenn die Eingaben ungültig sind (leerer Vor- oder Nachname), kehrt die Methode frühzeitig zurück.
+     */
     @FXML
     private void handleAddClient() {
         String firstName = firstNameField.getText().trim();
         String lastName = lastNameField.getText().trim();
 
         if (firstName.isEmpty() || lastName.isEmpty()) {
-            // You might want to show an error message to the user here
+            // Hier könnte eine Fehlermeldung an den Benutzer angezeigt werden
             return;
         }
 
@@ -41,6 +51,10 @@ public class AddClientController {
         stage.close();
     }
 
+    /**
+     * Behandelt die Aktion des Abbrechens des Client-Hinzufügens.
+     * Diese Methode schließt das aktuelle Fenster, ohne Daten zu speichern.
+     */
     @FXML
     private void handleCancel() {
         Stage stage = (Stage) firstNameField.getScene().getWindow();

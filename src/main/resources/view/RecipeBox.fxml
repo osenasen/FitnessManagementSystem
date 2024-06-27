@@ -6,7 +6,6 @@
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.StackPane?>
 
 <VBox fx:id="recipeBox" spacing="10" alignment="TOP_CENTER" stylesheets="@/css/styles.css" styleClass="recipe-box"
       xmlns:fx="http://javafx.com/fxml" fx:controller="fms.controller.RecipeBoxController">
@@ -14,9 +13,7 @@
         <Insets top="10" right="10" bottom="10" left="10"/>
     </padding>
     <Label fx:id="nameLabel" wrapText="true" styleClass="recipe-name"/>
-    <StackPane fx:id="imageContainer" minWidth="180" minHeight="180" styleClass="image-container">
-        <ImageView fx:id="recipeImage" fitWidth="180" fitHeight="180" preserveRatio="true"/>
-    </StackPane>
+    <ImageView fx:id="recipeImage" fitWidth="180" fitHeight="180" preserveRatio="true" styleClass="recipe-image"/>
     <HBox spacing="10" alignment="CENTER">
         <VBox alignment="CENTER" styleClass="nutrition-info">
             <Label text="Proteins" styleClass="nutrition-label"/>

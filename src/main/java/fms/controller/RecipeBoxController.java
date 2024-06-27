@@ -16,30 +16,33 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 public class RecipeBoxController {
+
     @FXML private VBox recipeBox;
     @FXML private Label nameLabel;
-    @FXML private StackPane imageContainer;
     @FXML private ImageView recipeImage;
     @FXML private Label proteinsLabel;
     @FXML private Label carbsLabel;
     @FXML private Label caloriesLabel;
     @FXML private Hyperlink recipeLink;
-    
+
     public void setRecipe(RecipeModel recipe) {
         nameLabel.setText(recipe.getName());
         proteinsLabel.setText(recipe.getProteins() + " g");
         carbsLabel.setText(recipe.getCarbs() + " g");
         caloriesLabel.setText(recipe.getCalories() + " kcal");
-        
+
         Image image = new Image(getClass().getResourceAsStream(recipe.getImagePath()));
         recipeImage.setImage(image);
-        
-        // Create a clip to round all corners of the image
-        Rectangle clip = new Rectangle(180, 180);
+
+        // Set a clip to apply rounded corners to the image
+        Rectangle clip = new Rectangle(recipeImage.getFitWidth(), recipeImage.getFitHeight());
         clip.setArcWidth(20);
         clip.setArcHeight(20);
-        imageContainer.setClip(clip);
-        
+        recipeImage.setClip(clip);
+
+        // Ensure the image fills the ImageView
+        recipeImage.setPreserveRatio(false);
+
         recipeLink.setOnAction(e -> openLink(recipe.getLinkPlaceholder()));
     }
     

@@ -1,29 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.cell.PropertyValueFactory?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.cell.CheckBoxTableCell?>
 
-<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="fms.controller.AddRecipeController" spacing="10" alignment="CENTER">
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox alignment="CENTER" spacing="10" xmlns:fx="http://javafx.com/fxml" fx:controller="fms.controller.AddRecipeController">
     <padding>
-        <Insets top="10" right="10" bottom="10" left="10"/>
+        <Insets top="20" right="20" bottom="20" left="20"/>
     </padding>
-    <TableView fx:id="recipeTableView">
+
+    <TableView fx:id="recipeTableView" VBox.vgrow="ALWAYS" minWidth="800">
         <columns>
-            <TableColumn fx:id="selectColumn" text="Select" prefWidth="75">
-                <cellValueFactory>
-                    <PropertyValueFactory property="selected"/>
-                </cellValueFactory>
-            </TableColumn>
-            <TableColumn fx:id="nameColumn" text="Name" prefWidth="150"/>
-            <TableColumn fx:id="proteinsColumn" text="Proteins" prefWidth="75"/>
-            <TableColumn fx:id="carbsColumn" text="Carbs" prefWidth="75"/>
-            <TableColumn fx:id="caloriesColumn" text="Calories" prefWidth="75"/>
-            <TableColumn fx:id="linkPlaceholderColumn" text="Link" prefWidth="150"/>
+            <TableColumn fx:id="selectColumn" text="Select"/>
+            <TableColumn fx:id="nameColumn" text="Name"/>
+            <TableColumn fx:id="proteinsColumn" text="Proteins (g)"/>
+            <TableColumn fx:id="carbsColumn" text="Carbs (g)"/>
+            <TableColumn fx:id="caloriesColumn" text="Calories"/>
+            <TableColumn fx:id="linkPlaceholderColumn" text="Recipe Link"/>
         </columns>
     </TableView>
+
     <Button text="Add Selected Recipes" onAction="#handleAddRecipes"/>
 </VBox>

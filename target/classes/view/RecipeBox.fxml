@@ -4,19 +4,29 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.control.Hyperlink?>
-<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.geometry.Insets?>
 
-<VBox fx:id="recipeBox" spacing="5" alignment="CENTER" stylesheets="/css/styles.css" styleClass="recipe-box"
+<VBox fx:id="recipeBox" spacing="10" alignment="TOP_CENTER" stylesheets="@/css/styles.css" styleClass="recipe-box"
       xmlns:fx="http://javafx.com/fxml" fx:controller="fms.controller.RecipeBoxController">
     <padding>
         <Insets top="10" right="10" bottom="10" left="10"/>
     </padding>
     <Label fx:id="nameLabel" wrapText="true" styleClass="recipe-name"/>
-    <ImageView fx:id="recipeImage" fitWidth="180" fitHeight="180" preserveRatio="true"/>
-    <Label fx:id="proteinsLabel"/>
-    <Label fx:id="carbsLabel"/>
-    <Label fx:id="caloriesLabel"/>
-    <Hyperlink fx:id="recipeLink" text="Recipe Link"/>
-    <Region VBox.vgrow="ALWAYS"/> <!-- This pushes the content to the top -->
+    <ImageView fx:id="recipeImage" fitWidth="180" fitHeight="180" preserveRatio="true" styleClass="recipe-image"/>
+    <HBox spacing="10" alignment="CENTER">
+        <VBox alignment="CENTER" styleClass="nutrition-info">
+            <Label text="Proteins" styleClass="nutrition-label"/>
+            <Label fx:id="proteinsLabel" styleClass="nutrition-value"/>
+        </VBox>
+        <VBox alignment="CENTER" styleClass="nutrition-info">
+            <Label text="Carbs" styleClass="nutrition-label"/>
+            <Label fx:id="carbsLabel" styleClass="nutrition-value"/>
+        </VBox>
+        <VBox alignment="CENTER" styleClass="nutrition-info">
+            <Label text="Calories" styleClass="nutrition-label"/>
+            <Label fx:id="caloriesLabel" styleClass="nutrition-value"/>
+        </VBox>
+    </HBox>
+    <Hyperlink fx:id="recipeLink" text="View Recipe" styleClass="recipe-link"/>
 </VBox>

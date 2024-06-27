@@ -15,13 +15,13 @@ public class DataManager {
     private static final String CLIENT_FILE = "src/main/resources/json/client_data.json";
     private static final String RECIPE_FILE = "src/main/resources/json/recipe_data.json";
     private static final String EXERCISE_FILE = "src/main/resources/json/exercise_data.json";
-
+    
     private static final ObjectMapper mapper = new ObjectMapper();
-
+    
     static {
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
     }
-
+    
     public static UserModel loadUser() {
         try {
             return mapper.readValue(new File(USER_FILE), UserModel.class);
@@ -30,7 +30,7 @@ public class DataManager {
             return new UserModel("defaultUser", "password");
         }
     }
-
+    
     public static void saveUser(UserModel user) {
         try {
             mapper.writeValue(new File(USER_FILE), user);
@@ -38,7 +38,7 @@ public class DataManager {
             e.printStackTrace();
         }
     }
-
+    
     public static List<ClientModel> loadClients() {
         try {
             return mapper.readValue(new File(CLIENT_FILE), new TypeReference<List<ClientModel>>() {});
@@ -47,7 +47,7 @@ public class DataManager {
             return new ArrayList<>();
         }
     }
-
+    
     public static void saveClients(List<ClientModel> clients) {
         try {
             mapper.writeValue(new File(CLIENT_FILE), clients);
@@ -55,7 +55,7 @@ public class DataManager {
             e.printStackTrace();
         }
     }
-
+    
     public static List<RecipeModel> loadRecipes() {
         try {
             return mapper.readValue(new File(RECIPE_FILE), new TypeReference<List<RecipeModel>>() {});
@@ -64,7 +64,7 @@ public class DataManager {
             return new ArrayList<>();
         }
     }
-
+    
     public static void saveRecipes(List<RecipeModel> recipes) {
         try {
             mapper.writeValue(new File(RECIPE_FILE), recipes);
@@ -72,7 +72,7 @@ public class DataManager {
             e.printStackTrace();
         }
     }
-
+    
     public static List<ExerciseModel> loadExercises() {
         try {
             return mapper.readValue(new File(EXERCISE_FILE), new TypeReference<List<ExerciseModel>>() {});
@@ -81,7 +81,7 @@ public class DataManager {
             return new ArrayList<>();
         }
     }
-
+    
     public static void saveExercises(List<ExerciseModel> exercises) {
         try {
             mapper.writeValue(new File(EXERCISE_FILE), exercises);
@@ -89,24 +89,24 @@ public class DataManager {
             e.printStackTrace();
         }
     }
-
+    
     public static List<Integer> getClientRecipeIds(int clientId) {
         List<ClientModel> clients = loadClients();
         return clients.stream()
-                .filter(c -> c.getId() == clientId)
-                .findFirst()
-                .map(ClientModel::getRecipeIds)
-                .orElse(new ArrayList<>());
+                   .filter(c -> c.getId() == clientId)
+                   .findFirst()
+                   .map(ClientModel::getRecipeIds)
+                   .orElse(new ArrayList<>());
     }
-
+    
     public static void updateClientRecipes(int clientId, List<Integer> recipeIds) {
         List<ClientModel> clients = loadClients();
         clients.stream()
-                .filter(c -> c.getId() == clientId)
-                .findFirst()
-                .ifPresent(client -> {
-                    client.setRecipeIds(recipeIds);
-                    saveClients(clients);
-                });
+            .filter(c -> c.getId() == clientId)
+            .findFirst()
+            .ifPresent(client -> {
+                client.setRecipeIds(recipeIds);
+                saveClients(clients);
+            });
     }
 }

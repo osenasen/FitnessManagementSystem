@@ -6,6 +6,7 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 
@@ -15,44 +16,29 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 public class RecipeBoxController {
-    
     @FXML private VBox recipeBox;
-
     @FXML private Label nameLabel;
-
+    @FXML private StackPane imageContainer;
     @FXML private ImageView recipeImage;
-
     @FXML private Label proteinsLabel;
-
     @FXML private Label carbsLabel;
-
     @FXML private Label caloriesLabel;
-
     @FXML private Hyperlink recipeLink;
     
     public void setRecipe(RecipeModel recipe) {
         nameLabel.setText(recipe.getName());
-        proteinsLabel.setText(String.valueOf(recipe.getProteins()));
-        carbsLabel.setText(String.valueOf(recipe.getCarbs()));
-        caloriesLabel.setText(String.valueOf(recipe.getCalories()));
+        proteinsLabel.setText(recipe.getProteins() + " g");
+        carbsLabel.setText(recipe.getCarbs() + " g");
+        caloriesLabel.setText(recipe.getCalories() + " kcal");
         
         Image image = new Image(getClass().getResourceAsStream(recipe.getImagePath()));
         recipeImage.setImage(image);
         
         // Create a clip to round all corners of the image
-        Rectangle clip = new Rectangle(
-            recipeImage.getFitWidth(),
-            recipeImage.getFitHeight()
-        );
+        Rectangle clip = new Rectangle(180, 180);
         clip.setArcWidth(20);
         clip.setArcHeight(20);
-        recipeImage.setClip(clip);
-        
-        // Ensure the clip resizes with the image
-        recipeImage.fitWidthProperty().addListener((obs, oldVal, newVal) ->
-                                                       clip.setWidth(newVal.doubleValue()));
-        recipeImage.fitHeightProperty().addListener((obs, oldVal, newVal) ->
-                                                        clip.setHeight(newVal.doubleValue()));
+        imageContainer.setClip(clip);
         
         recipeLink.setOnAction(e -> openLink(recipe.getLinkPlaceholder()));
     }

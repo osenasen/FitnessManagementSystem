@@ -29,25 +29,24 @@ public class AddRecipeController {
     private TableColumn<RecipeModel, Integer> caloriesColumn;
     @FXML
     private TableColumn<RecipeModel, String> linkPlaceholderColumn;
-
+    
     private int clientId;
-
+    
     public void setClientId(int clientId) {
         this.clientId = clientId;
         loadRecipes();
     }
-
+    
     @FXML
     public void initialize() {
         String css = this.getClass().getResource("/css/styles.css").toExternalForm();
         recipeTableView.getStylesheets().add(css);
-
+        
         setupTableColumns();
         recipeTableView.setEditable(true);
     }
     
     private void setupTableColumns() {
-        // Setup for select column
         selectColumn.setCellValueFactory(cellData -> cellData.getValue().selectedProperty());
         selectColumn.setCellFactory(column -> new TableCell<RecipeModel, Boolean>() {
             private final ToggleButton toggleButton = new ToggleButton();
@@ -72,14 +71,21 @@ public class AddRecipeController {
             }
         });
         
-        // Setup for other columns
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         proteinsColumn.setCellValueFactory(new PropertyValueFactory<>("proteins"));
         carbsColumn.setCellValueFactory(new PropertyValueFactory<>("carbs"));
         caloriesColumn.setCellValueFactory(new PropertyValueFactory<>("calories"));
         linkPlaceholderColumn.setCellValueFactory(new PropertyValueFactory<>("linkPlaceholder"));
         
-        // Optionally, add cell factories for better formatting
+        // Set preferred widths for columns
+        selectColumn.setPrefWidth(80);
+        nameColumn.setPrefWidth(200);
+        proteinsColumn.setPrefWidth(100);
+        carbsColumn.setPrefWidth(100);
+        caloriesColumn.setPrefWidth(100);
+        linkPlaceholderColumn.setPrefWidth(150);
+        
+        // Custom cell factories for formatting
         proteinsColumn.setCellFactory(column -> new TableCell<RecipeModel, Integer>() {
             @Override
             protected void updateItem(Integer item, boolean empty) {
@@ -87,7 +93,7 @@ public class AddRecipeController {
                 if (empty || item == null) {
                     setText(null);
                 } else {
-                    setText(item.toString() + " g");
+                    setText(item + " g");
                 }
             }
         });
@@ -99,7 +105,7 @@ public class AddRecipeController {
                 if (empty || item == null) {
                     setText(null);
                 } else {
-                    setText(item.toString() + " g");
+                    setText(item + " g");
                 }
             }
         });
@@ -111,7 +117,7 @@ public class AddRecipeController {
                 if (empty || item == null) {
                     setText(null);
                 } else {
-                    setText(item.toString() + " kcal");
+                    setText(item + " kcal");
                 }
             }
         });
@@ -129,19 +135,22 @@ public class AddRecipeController {
                 }
             }
         });
+        
+        // Make the table resizable
+        recipeTableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
     }
-
+    
     private void loadRecipes() {
         List<RecipeModel> allRecipes = DataManager.loadRecipes();
         List<Integer> clientRecipeIds = DataManager.getClientRecipeIds(clientId);
-
+        
         for (RecipeModel recipe : allRecipes) {
             recipe.setSelected(clientRecipeIds.contains(recipe.getId()));
         }
-
+        
         recipeTableView.setItems(FXCollections.observableArrayList(allRecipes));
     }
-
+    
     @FXML
     private void handleAddRecipes() {
         List<Integer> selectedRecipeIds = recipeTableView.getItems().stream()

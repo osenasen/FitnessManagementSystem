@@ -1,14 +1,38 @@
 [
   {
     "id": 1,
-    "name": "Exercise 1",
+    "name": "Squats",
     "description": "Description of Exercise 1",
     "duration": 30
   },
   {
     "id": 2,
-    "name": "Exercise 2",
+    "name": "Crunches",
     "description": "Description of Exercise 2",
     "duration": 45
+  },
+  {
+    "id": 3,
+    "name": "Bridge",
+    "description": "Description of Exercise 1",
+    "duration": 30
+  },
+  {
+    "id": 4,
+    "name": "Superman",
+    "description": "Description of Exercise 1",
+    "duration": 30
+  },
+  {
+    "id": 5,
+    "name": "Mountain Climbers",
+    "description": "Description of Exercise 1",
+    "duration": 30
+  },
+  {
+    "id": 6,
+    "name": "Plank",
+    "description": "Description of Exercise 1",
+    "duration": 30
   }
 ]

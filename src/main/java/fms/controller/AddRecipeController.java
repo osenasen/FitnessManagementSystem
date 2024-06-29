@@ -4,10 +4,8 @@ import fms.model.RecipeModel;
 import fms.util.DataManager;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.ToggleButton;
+import javafx.geometry.Pos;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
@@ -45,46 +43,45 @@ public class AddRecipeController {
         setupTableColumns();
         recipeTableView.setEditable(true);
     }
-    
+
     private void setupTableColumns() {
         selectColumn.setCellValueFactory(cellData -> cellData.getValue().selectedProperty());
-        selectColumn.setCellFactory(column -> new TableCell<RecipeModel, Boolean>() {
-            private final ToggleButton toggleButton = new ToggleButton();
-            
-            {
-                toggleButton.getStyleClass().add("recipe-toggle");
-                toggleButton.setOnAction(event -> {
-                    RecipeModel recipe = getTableView().getItems().get(getIndex());
-                    recipe.setSelected(toggleButton.isSelected());
-                });
-            }
-            
-            @Override
-            protected void updateItem(Boolean item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    toggleButton.setSelected(item);
-                    setGraphic(toggleButton);
-                }
-            }
-        });
-        
+        selectColumn.setCellFactory(column -> new ToggleButtonTableCell<>());
+
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         proteinsColumn.setCellValueFactory(new PropertyValueFactory<>("proteins"));
         carbsColumn.setCellValueFactory(new PropertyValueFactory<>("carbs"));
         caloriesColumn.setCellValueFactory(new PropertyValueFactory<>("calories"));
         linkPlaceholderColumn.setCellValueFactory(new PropertyValueFactory<>("linkPlaceholder"));
-        
-        // Set preferred widths for columns
-        selectColumn.setPrefWidth(80);
+
+        // Adjust column widths
+        selectColumn.setPrefWidth(60);
         nameColumn.setPrefWidth(200);
-        proteinsColumn.setPrefWidth(100);
-        carbsColumn.setPrefWidth(100);
-        caloriesColumn.setPrefWidth(100);
-        linkPlaceholderColumn.setPrefWidth(150);
-        
+        proteinsColumn.setPrefWidth(80);
+        carbsColumn.setPrefWidth(80);
+        caloriesColumn.setPrefWidth(80);
+        linkPlaceholderColumn.setPrefWidth(100);
+
+        recipeTableView.setTableMenuButtonVisible(false);
+
+
+        nameColumn.setCellFactory(column -> {
+            TableCell<RecipeModel, String> cell = new TableCell<RecipeModel, String>() {
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty || item == null) {
+                        setText(null);
+                        setTooltip(null);
+                    } else {
+                        setText(item);
+                        setTooltip(new Tooltip(item));
+                    }
+                }
+            };
+            return cell;
+        });
+
         // Custom cell factories for formatting
         proteinsColumn.setCellFactory(column -> new TableCell<RecipeModel, Integer>() {
             @Override
@@ -95,9 +92,10 @@ public class AddRecipeController {
                 } else {
                     setText(item + " g");
                 }
+                setAlignment(Pos.CENTER_RIGHT);
             }
         });
-        
+
         carbsColumn.setCellFactory(column -> new TableCell<RecipeModel, Integer>() {
             @Override
             protected void updateItem(Integer item, boolean empty) {
@@ -107,9 +105,10 @@ public class AddRecipeController {
                 } else {
                     setText(item + " g");
                 }
+                setAlignment(Pos.CENTER_RIGHT);
             }
         });
-        
+
         caloriesColumn.setCellFactory(column -> new TableCell<RecipeModel, Integer>() {
             @Override
             protected void updateItem(Integer item, boolean empty) {
@@ -119,9 +118,10 @@ public class AddRecipeController {
                 } else {
                     setText(item + " kcal");
                 }
+                setAlignment(Pos.CENTER_RIGHT);
             }
         });
-        
+
         linkPlaceholderColumn.setCellFactory(column -> new TableCell<RecipeModel, String>() {
             @Override
             protected void updateItem(String item, boolean empty) {
@@ -129,13 +129,16 @@ public class AddRecipeController {
                 if (empty || item == null) {
                     setText(null);
                 } else {
-                    setText("View Recipe");
-                    setTextFill(javafx.scene.paint.Color.BLUE);
-                    setUnderline(true);
+                    Hyperlink link = new Hyperlink("View Recipe");
+                    link.setOnAction(event -> {
+                        // Add your link action here
+                    });
+                    setGraphic(link);
                 }
+                setAlignment(Pos.CENTER);
             }
         });
-        
+
         // Make the table resizable
         recipeTableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
     }

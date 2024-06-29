@@ -10,24 +10,13 @@ public class ToggleButtonTableCell<S> extends TableCell<S, Boolean> {
 
   public ToggleButtonTableCell() {
     toggleButton = new ToggleButton();
+    toggleButton.getStyleClass().add("recipe-toggle");
     toggleButton.setOnAction(event -> {
       if (getTableRow() != null && getTableRow().getItem() != null) {
         RecipeModel recipe = (RecipeModel) getTableRow().getItem();
         recipe.setSelected(toggleButton.isSelected());
-        updateButtonStyle();
       }
     });
-
-    // Set initial style
-    updateButtonStyle();
-  }
-
-  private void updateButtonStyle() {
-    if (toggleButton.isSelected()) {
-      toggleButton.setStyle("-fx-background-color: #90EE90; -fx-text-fill: white;"); // Light green
-    } else {
-      toggleButton.setStyle("-fx-background-color: #FFB6C1; -fx-text-fill: white;"); // Light red
-    }
   }
 
   @Override
@@ -37,7 +26,6 @@ public class ToggleButtonTableCell<S> extends TableCell<S, Boolean> {
       setGraphic(null);
     } else {
       toggleButton.setSelected(item);
-      updateButtonStyle();
       setGraphic(toggleButton);
     }
   }

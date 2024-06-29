@@ -9,9 +9,9 @@
         <Insets top="20" right="20" bottom="20" left="20"/>
     </padding>
 
-    <TableView fx:id="recipeTableView" VBox.vgrow="ALWAYS" minWidth="800">
+    <TableView fx:id="recipeTableView" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS" >
         <columns>
-            <TableColumn fx:id="selectColumn" text="Select"/>
+            <TableColumn fx:id="selectColumn" text=""/>
             <TableColumn fx:id="nameColumn" text="Name"/>
             <TableColumn fx:id="proteinsColumn" text="Proteins (g)"/>
             <TableColumn fx:id="carbsColumn" text="Carbs (g)"/>

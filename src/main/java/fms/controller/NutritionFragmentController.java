@@ -2,6 +2,8 @@ package fms.controller;
 import fms.model.RecipeModel;
 import fms.util.DataManager;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -56,24 +58,24 @@ public class NutritionFragmentController {
             }
         }
     }
-    
+
     private VBox createRecipeBox(RecipeModel recipe) {
         try {
-            // Adjust this path to match your project structure
-            String fxmlPath = "/view/RecipeBox.fxml";
-            URL location = getClass().getResource(fxmlPath);
-            if (location == null) {
-                throw new IllegalStateException("Cannot find FXML file: " + fxmlPath);
-            }
-            FXMLLoader loader = new FXMLLoader(location);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/RecipeBox.fxml"));
             VBox recipeBox = loader.load();
             RecipeBoxController controller = loader.getController();
             controller.setRecipe(recipe);
+
+            // Add tooltip to the recipe name label
+            Label nameLabel = (Label) recipeBox.lookup("#nameLabel");
+            if (nameLabel != null) {
+                nameLabel.setTooltip(new Tooltip(recipe.getName()));
+            }
+
             return recipeBox;
         } catch (IOException e) {
             e.printStackTrace();
-            // Log the error or show an alert to the user
-            return new VBox(); // Return an empty VBox in case of error
+            return new VBox();
         }
     }
 

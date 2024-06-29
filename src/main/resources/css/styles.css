@@ -6,7 +6,6 @@
     -fx-background-radius: 10px;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);
 }
-
 .recipe-name {
     -fx-font-size: 16px;
     -fx-font-weight: bold;
@@ -62,49 +61,65 @@
 }
 
 .table-view {
-    -fx-background-color: transparent;
+    -fx-background-color: white;
+    -fx-table-cell-border-color: transparent;
 }
 
 .table-view .column-header-background {
     -fx-background-color: #4CAF50;
 }
 
-.table-view .column-header, .table-view .filler {
-    -fx-size: 35;
-    -fx-border-width: 0 0 1 0;
+.table-view .column-header {
     -fx-background-color: transparent;
-    -fx-border-color:
-            transparent
-            transparent
-            derive(-fx-base, 80%)
-            transparent;
-    -fx-border-insets: 0 10 1 0;
 }
 
 .table-view .column-header .label {
-    -fx-font-size: 14pt;
-    -fx-font-family: "Segoe UI Light";
     -fx-text-fill: white;
-    -fx-alignment: center-left;
-    -fx-opacity: 1;
-}
-
-.table-view:focused .table-row-cell:filled:focused:selected {
-    -fx-background-color: -fx-focus-color;
+    -fx-font-weight: bold;
 }
 
 .table-row-cell {
-    -fx-background-color: -fx-table-cell-border-color, #F5F5F5;
-    -fx-background-insets: 0, 0 0 1 0;
-    -fx-padding: 0.0em;
+    -fx-background-color: #f8f8f8;
+    -fx-border-color: transparent;
+    -fx-table-cell-border-color: transparent;
 }
 
 .table-row-cell:odd {
-    -fx-background-color: -fx-table-cell-border-color, #E0E0E0;
-    -fx-background-insets: 0, 0 0 1 0;
-    -fx-padding: 0.0em;
+    -fx-background-color: #f0f0f0;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #bde9bd;
+}
+
+.recipe-toggle {
+    -fx-background-color: #ff6b6b;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 15;
+    -fx-min-width: 40px;
+    -fx-min-height: 25px;
+    -fx-padding: 0;
+}
+
+.recipe-toggle:selected {
+    -fx-background-color: #4CAF50;
+}
+
+.table-cell {
+    -fx-alignment: CENTER-LEFT;
+    -fx-padding: 5 10 5 10;
 }
 .recipe-image {
     -fx-background-radius: 10px;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);
+}
+.tooltip {
+    -fx-background-color: #f0f0f0;
+    -fx-text-fill: #333333;
+    -fx-font-size: 14px;
+    -fx-padding: 5px;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
 }
